@@ -16,6 +16,7 @@ def main():
     # R2 print valid_account_list_file's content
     # R3 write 'hmm i am a transaction.' to the transaction_summary_file
     # """
+    R1()
     print('Welcome the Queens ATM machine')
     #
     # # for simplicity
