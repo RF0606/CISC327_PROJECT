@@ -1,14 +1,6 @@
 import sys
 import os
 
-from qa327.landing import R1
-from qa327.register import R2
-from qa327.login import R3
-from qa327.sell import R4
-from qa327.buy import R5
-from qa327.update import R6
-from qa327.logout import R7
-from qa327.exit import R8
 
 def main():
     # """ An example program of frontend that does
@@ -16,8 +8,9 @@ def main():
     # R2 print valid_account_list_file's content
     # R3 write 'hmm i am a transaction.' to the transaction_summary_file
     # """
-    R1()
     print('Welcome the Queens ATM machine')
+
+    exit(0)
     #
     # # for simplicity
     # # you can use argparse for sure
@@ -36,3 +29,35 @@ def main():
     #         # exit
     # else:
     #     print('omg wrong key')
+
+
+def R1():
+    print('hi')
+
+
+def R2():
+    print('hi')
+
+
+def R3():
+    print('hi')
+
+
+def R4():
+    print('hi')
+
+
+def R5():
+    print('hi')
+
+
+def R6():
+    print('hi')
+
+
+def R7():
+    print('hi')
+
+
+def R8():
+    print('hi')
