@@ -10,7 +10,7 @@ def main():
     # """
     print('Welcome the Queens ATM machine')
 
-    exit(0)
+    exit()
     #
     # # for simplicity
     # # you can use argparse for sure
