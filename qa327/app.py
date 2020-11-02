@@ -44,6 +44,31 @@ def main():
 
 def R1():
     print('landing')
+    if status:
+        print('Your Balance:', balance)
+        input1 = input('Type your choice:\nsell  buy  update  logout\n')
+        if input1 == 'sell':
+            R4()
+        elif input1 == 'buy':
+            R5()
+        elif input1 == 'update':
+            R6()
+        elif input1 == 'logout':
+            R7()
+        else:
+            print('Invalid command.')
+            R1()
+    if not status:
+        input1 = input('Type your choice:\nregister  login  exit\n')
+        if input1 == 'register':
+            R2()
+        elif input1 == 'login':
+            R3()
+        elif input1 == 'exit':
+            R8()
+        else:
+            print('Invalid command.')
+            R1()
 
 
 def R2():
@@ -72,3 +97,7 @@ def R7():
 
 def R8():
     print('exit')
+    userFile.close()
+    ticketFile.close()
+    tranFile.close()
+    exit(0)
