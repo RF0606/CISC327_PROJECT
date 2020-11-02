@@ -21,7 +21,7 @@ def main():
     # R3 write 'hmm i am a transaction.' to the transaction_summary_file
     # """
     print('Welcome the Queens ticket trade machine')
-
+    R1()
     #
     # # for simplicity
     # # you can use argparse for sure
