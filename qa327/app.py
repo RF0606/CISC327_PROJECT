@@ -2,6 +2,7 @@ import csv
 import sys
 import os
 import time
+import rs
 
 status = False
 user_name = 'test_name'
