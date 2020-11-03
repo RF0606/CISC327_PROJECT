@@ -3,7 +3,7 @@ import sys
 import os
 import time
 
-status = True
+status = False
 user_name = 'test_name'
 user_email = 'test@test.com'
 user_password = '123asd'
