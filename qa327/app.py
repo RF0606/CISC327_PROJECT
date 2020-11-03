@@ -1,8 +1,9 @@
 import csv
+import string
 import sys
 import os
 import time
-import rs
+import re
 
 status = False
 user_name = 'test_name'
@@ -83,15 +84,30 @@ def R2():
         register_email, register_name, register_password,register_password2 = input('please enter your email, user name, password and confirm your password').split(',')
     except:
         print('Please retype!\nThe number of inputs should be 4.')
-
     if not (check_register_email(register_email) and check_register_name(register_name) and check_register_password(register_password) and check_register_password2(register_password,register_password2)):
-        R2()
-    userWriter.writerow(['registration', register_email, register_name, register_password, register_password2, 3000])
+        R1()
+    userWriter.writerow(['registration', register_name, register_email, register_password, 3000])
     print('account registered')
     R1()
 
+
 def R3():
-    print('login')
+    print('Login session started successfully!')
+    try:
+        login_email, login_password = input('Please type your email and password').split(',')
+    except:
+        print('Please retype!\nThe number of inputs should be 2.')
+    if not (check_register_email(login_email) and check_register_password(login_password)):
+        R1()
+    for i in userReader:
+        if login_email == userReader[i][0] and login_password == userReader[i][2]:
+            global status
+            status = True
+            print('account registered')
+            R1()
+        else:
+            print('login failed')
+            R1()
 
 
 def R4():
@@ -222,22 +238,24 @@ def check_quantity_buy(price, quantity, aval_quantity):
         print('Selling transaction was created unsuccessfully.\nPlease retype!\nThe quantity of the tickets has to be '
               'more than 0, and less than or equal to the available quantity.')
         return False
-    elif not (balance >= price * quantity * 1.35 *1.05):
+    elif not (balance >= price * quantity * 1.35 * 1.05):
         print('Selling transaction was created unsuccessfully.\nPlease retype!\nYour balance is insufficient.')
         return False
     return True
 
+
 def check_register_email(register_email) :
-    if re.match("^.+\\@(\\[?)[a-zA-Z0-9\\-\\.]+\\.([a-zA-Z]{2,3}|[0-9]{1,3})(\\]?)$", register_email) != None:
+    if re.match("^.+\\@(\\[?)[a-zA-Z0-9\\-\\.]+\\.([a-zA-Z]{2,3}|[0-9]{1,3})(\\]?)$", register_email) is not None:
         return True
     print("email format is incorrect\n")
     return False
+
 
 def check_register_name(register_name):
     if not (register_name.isalnum() or register_name.isspace()):
         print('user name format is incorrect\nTicket name should be alphanumeric-only.\n')
         return False
-    if not (register_name[0].isspace() or register_name[len(ticket_name) - 1].isspace):
+    if not (register_name[0].isspace() or register_name[len(register_name) - 1].isspace):
         print('user name format is incorrect\nSpace allowed only if it is not the first or the last character.\n')
         return False
     elif len(register_name) > 20 or len(register_name) < 2:
@@ -245,14 +263,15 @@ def check_register_name(register_name):
         return False
     return True
 
-def check_register_password(register_password):
 
+def check_register_password(register_password):
     pattern = r'^(?![A-Za-z0-9]+$)(?![a-z0-9\\W]+$)(?![A-Za-z\\W]+$)(?![A-Z0-9\\W]+$)^.{6,}$'
     res = re.search(pattern, string)
-    if regs:
+    if res:
         return True
     print('password format is incorrect\n')
     return False
+
 
 def check_register_password2(register_password,register_password2):
     if register_password == register_password2:
