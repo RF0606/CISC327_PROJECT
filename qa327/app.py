@@ -77,8 +77,17 @@ def R1():
 
 
 def R2():
-    print('register')
+    print('register session statred successfully')
+    try:
+        register_email, register_name, register_password,register_password2 = input('please enter your email, user name, password and confirm your password').split(',')
+    except:
+        print('Please retype!\nThe number of inputs should be 4.')
 
+    if not (check_register_email(register_email) and check_register_name(register_name) and check_register_password(register_password) and check_register_password2(register_password,register_password2)):
+        R2()
+    userWriter.writerow(['registration', register_email, register_name, register_password, register_password2, 3000])
+    print('account registered')
+    R1()
 
 def R3():
     print('login')
@@ -216,3 +225,36 @@ def check_quantity_buy(price, quantity, aval_quantity):
         print('Selling transaction was created unsuccessfully.\nPlease retype!\nYour balance is insufficient.')
         return False
     return True
+
+def check_register_email(register_email) :
+    if re.match("^.+\\@(\\[?)[a-zA-Z0-9\\-\\.]+\\.([a-zA-Z]{2,3}|[0-9]{1,3})(\\]?)$", register_email) != None:
+        return True
+    print("email format is incorrect\n")
+    return False
+
+def check_register_name(register_name):
+    if not (register_name.isalnum() or register_name.isspace()):
+        print('user name format is incorrect\nTicket name should be alphanumeric-only.\n')
+        return False
+    if not (register_name[0].isspace() or register_name[len(ticket_name) - 1].isspace):
+        print('user name format is incorrect\nSpace allowed only if it is not the first or the last character.\n')
+        return False
+    elif len(register_name) > 20 or len(register_name) < 2:
+        print('user name format is incorrect\nThe ticket name should be longer than 2 and shorter that 20 characters.\n')
+        return False
+    return True
+
+def check_register_password(register_password):
+
+    pattern = r'^(?![A-Za-z0-9]+$)(?![a-z0-9\\W]+$)(?![A-Za-z\\W]+$)(?![A-Z0-9\\W]+$)^.{6,}$'
+    res = re.search(pattern, string)
+    if regs:
+        return True
+    print('password format is incorrect\n')
+    return False
+
+def check_register_password2(register_password,register_password2):
+    if register_password == register_password2:
+        return True
+    print("two password doesn't match, please confirm your password\n")
+    return False
