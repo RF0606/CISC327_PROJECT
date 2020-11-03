@@ -149,7 +149,6 @@ def R8():
     exit(0)
 
 
-# 48-57 65-90 97-122
 def check_ticket_name(ticket_name):
     if not (ticket_name.isalnum() or ticket_name.isspace()):
         print('Selling transaction was created unsuccessfully.\nPlease retype!\nTicket name should be '
