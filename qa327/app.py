@@ -254,10 +254,15 @@ def check_quantity_buy(price, quantity, aval_quantity):
 
 
 def check_register_email(register_email) :
-    if re.match("^.+\\@(\\[?)[a-zA-Z0-9\\-\\.]+\\.([a-zA-Z]{2,3}|[0-9]{1,3})(\\]?)$", register_email) is not None:
-        return True
-    print("email format is incorrect\n")
-    return False
+    if re.match("^.+\\@(\\[?)[a-zA-Z0-9\\-\\.]+\\.([a-zA-Z]{2,3}|[0-9]{1,3})(\\]?)$", register_email) is None:
+        print("email format is incorrect\n")
+        return False
+
+    for i in userReader:
+        if register_email == userReader[i][2]:
+            print("account already exits.\n")
+            return False
+    return True
 
 
 def check_register_name(register_name):
