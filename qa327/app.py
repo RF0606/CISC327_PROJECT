@@ -51,29 +51,30 @@ def main():
 
 
 def R1():
+    print('landing')
     if status:
-        print('Your Balance:', balance)
+        print('Your Balance:', balance)  # print out the user's balance
         input1 = input('Type your choice:\nsell  buy  update  logout\n')
-        if input1 == 'sell':
+        if input1 == 'sell':  # user wants to go to sell session
             R4()
-        elif input1 == 'buy':
+        elif input1 == 'buy':  # user wants to go to buy session
             R5()
-        elif input1 == 'update':
+        elif input1 == 'update':  # user wants to go to update session
             R6()
-        elif input1 == 'logout':
+        elif input1 == 'logout':  # user wants to go to logout session
             R7()
-        else:
+        else:  # user enters other invalid commands
             print('Invalid command.')
             R1()
     if not status:
         input1 = input('Type your choice:\nregister  login  exit\n')
-        if input1 == 'register':
+        if input1 == 'register':  # user wants to go to register session
             R2()
-        elif input1 == 'login':
+        elif input1 == 'login':  # user wants to go to login session
             R3()
-        elif input1 == 'exit':
+        elif input1 == 'exit':  # user wants to go to exit session
             R8()
-        else:
+        else:  # user enters other invalid commands
             print('Invalid command.')
             R1()
 
@@ -166,9 +167,17 @@ def R6():
 
 def R7():
     print('logout')
+    global status
+    if status:  # user already logged in
+        print("logout successfully")
+        status = False
+    else:  # user has not logged in
+        print("You are not login\nPlease enter login")
 
 
 def R8():
+    print('exit')
+    # close three resource files
     userFile.close()
     ticketFile.close()
     tranFile.close()
