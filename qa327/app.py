@@ -78,17 +78,25 @@ def R1():
             print('Invalid command.')
             R1()
 
-
+'''
+R2 will be the register session, which will allow user to register their account
+'''
 def R2():
-    print('register session statred successfully')
-    try:
-        register_email, register_name, register_password,register_password2 = input('please enter your email, user name, password and confirm your password').split(',')
+    userFile = open('user.csv', 'a+')
+    userWriter = csv.writer(userFile)
+
+    print('register session started successfully')
+    try: #if inputs are missing, call R2 again
+        register_email, register_name, register_password,register_password2 = input('please enter your email, user name, password and confirm your password:\n').split(',')
     except:
         print('Please retype!\nThe number of inputs should be 4.')
+        R2()
+    #do the testing for user inputs, and outputs warning if there is any error. finally, go back to R1
     if not (check_register_email(register_email) and check_register_name(register_name) and check_register_password(register_password) and check_register_password2(register_password,register_password2)):
         R1()
-    userWriter.writerow(['registration', register_name, register_email, register_password, 3000])
+    userWriter.writerow(['registration', register_name, register_email, register_password, 3000])#write registration information into file
     print('account registered')
+    userFile.close()
     R1()
 
 
@@ -256,41 +264,57 @@ def check_quantity_buy(price, quantity, aval_quantity):
         return False
     return True
 
-
+'''
+this function will take an string of user email as input, and True or False as output
+it will check if the format of email is correct and if the email is already used
+'''
 def check_register_email(register_email) :
+    userReader = csv.reader(open('user.csv', 'r')) #read the file
+    #if the format of input email is not as follows, return false
     if re.match("^.+\\@(\\[?)[a-zA-Z0-9\\-\\.]+\\.([a-zA-Z]{2,3}|[0-9]{1,3})(\\]?)$", register_email) is None:
         print("email format is incorrect\n")
         return False
-
+    #if input email already exits, return False
     for i in userReader:
-        if register_email == userReader[i][2]:
+        if register_email == i[2]:
             print("account already exits.\n")
             return False
     return True
-
-
+'''
+this function will take an string of user name as input, and True or False as output
+it will check if the format of user name is correct
+'''
 def check_register_name(register_name):
+    #name can only be alphanumerical
     if not (register_name.isalnum() or register_name.isspace()):
-        print('user name format is incorrect\nTicket name should be alphanumeric-only.\n')
+        print('user name format is incorrect.(User name should be alphanumeric-only.)\n')
         return False
+    #space allowed only if it's not the first and last character
     if not (register_name[0].isspace() or register_name[len(register_name) - 1].isspace):
-        print('user name format is incorrect\nSpace allowed only if it is not the first or the last character.\n')
+        print('user name format is incorrect.(Space allowed only if it is not the first or the last character.)\n')
         return False
+    #length of name should be longer than 2 and shorter than 20
     elif len(register_name) > 20 or len(register_name) < 2:
-        print('user name format is incorrect\nThe ticket name should be longer than 2 and shorter that 20 characters.\n')
+        print('user name format is incorrect.(User name should be longer than 2 and shorter that 20 characters.)\n')
         return False
     return True
-
-
+'''
+this function will take an string of user password as input, and True or False as output
+it will check if the format of user password is correct
+'''
 def check_register_password(register_password):
+    # if the format of input password is not as follows, return false
+    #at least one upper and one lower case with special characters, minimum 6 in length
     pattern = r'^(?![A-Za-z0-9]+$)(?![a-z0-9\\W]+$)(?![A-Za-z\\W]+$)(?![A-Z0-9\\W]+$)^.{6,}$'
-    res = re.search(pattern, string)
+    res = re.search(pattern, register_password)
     if res:
         return True
     print('password format is incorrect\n')
     return False
-
-
+'''
+this function will take two string of user password as input, and True or False as output
+it will check if two input are the same
+'''
 def check_register_password2(register_password,register_password2):
     if register_password == register_password2:
         return True
