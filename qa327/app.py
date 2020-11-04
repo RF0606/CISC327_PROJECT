@@ -82,9 +82,6 @@ def R1():
 R2 will be the register session, which will allow user to register their account
 '''
 def R2():
-    userFile = open('user.csv', 'a+')
-    userWriter = csv.writer(userFile)
-
     print('register session started successfully')
     try: #if inputs are missing, call R2 again
         register_email, register_name, register_password,register_password2 = input('please enter your email, user name, password and confirm your password:\n').split(',')
@@ -92,11 +89,11 @@ def R2():
         print('Please retype!\nThe number of inputs should be 4.')
         R2()
     #do the testing for user inputs, and outputs warning if there is any error. finally, go back to R1
-    if not (check_register_email(register_email) and check_register_name(register_name) and check_register_password(register_password) and check_register_password2(register_password,register_password2)):
+    if not (check_register_email(register_email) and check_exits_email(register_email) and check_register_name(register_name) and check_register_password(register_password) and check_register_password2(register_password,register_password2)):
         R1()
     userWriter.writerow(['registration', register_name, register_email, register_password, 3000])#write registration information into file
     print('account registered')
-    userFile.close()
+    userFile.flush()
     R1()
 
 
@@ -266,20 +263,28 @@ def check_quantity_buy(price, quantity, aval_quantity):
 
 '''
 this function will take an string of user email as input, and True or False as output
-it will check if the format of email is correct and if the email is already used
+it will check if the format of email is correct 
 '''
 def check_register_email(register_email) :
-    userReader = csv.reader(open('user.csv', 'r')) #read the file
     #if the format of input email is not as follows, return false
     if re.match("^.+\\@(\\[?)[a-zA-Z0-9\\-\\.]+\\.([a-zA-Z]{2,3}|[0-9]{1,3})(\\]?)$", register_email) is None:
         print("email format is incorrect\n")
         return False
-    #if input email already exits, return False
+    return True
+
+'''
+this function will take an string of user email as input, and True or False as output
+it will check  if the email is already exits 
+'''
+def check_exits_email(register_email) :
+    userReader = csv.reader(open('user.csv', 'r'))  # read the file
+    # if input email already exits, return False
     for i in userReader:
         if register_email == i[2]:
-            print("account already exits.\n")
+            print("account exits.\n")
             return False
     return True
+
 '''
 this function will take an string of user name as input, and True or False as output
 it will check if the format of user name is correct
@@ -320,3 +325,5 @@ def check_register_password2(register_password,register_password2):
         return True
     print("two password doesn't match, please confirm your password\n")
     return False
+
+main()
