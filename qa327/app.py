@@ -101,9 +101,13 @@ def R3():
         R1()
     for i in userReader:
         if login_email == userReader[i][0] and login_password == userReader[i][2]:
-            global status
+            global status, user_name, user_email, user_password, balance
             status = True
-            print('account registered')
+            user_name = userReader[i][1]
+            user_email = userReader[i][0]
+            user_password = userReader[i][2]
+            balance = userReader[i][3]
+            print('account logged in')
             R1()
         else:
             print('login failed')
