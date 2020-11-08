@@ -2,7 +2,7 @@ import csv
 import time
 import re
 
-status = True
+status = False
 user_name = ''
 user_email = ''
 user_password = ''
