@@ -1,15 +1,12 @@
 import csv
-import string
-import sys
-import os
 import time
 import re
 
-status = False
-user_name = 'test_name'
-user_email = 'test@test.com'
-user_password = '123asd'
-balance = 100
+status = True
+user_name = ''
+user_email = ''
+user_password = ''
+balance = -1
 
 userFile = open('user.csv', 'a+')
 ticketFile = open('ticket.csv', 'a+')
@@ -23,38 +20,14 @@ tranWriter = csv.writer(tranFile)
 
 
 def main():
-    # """ An example program of frontend that does
-    # R1 program only accepts 'login' as key
-    # R2 print valid_account_list_file's content
-    # R3 write 'hmm i am a transaction.' to the transaction_summary_file
-    # """
     print('Welcome the Queens ticket trade machine')
     R1()
-    #
-    # # for simplicity
-    # # you can use argparse for sure
-    # valid_account_list_file = sys.argv[1]
-    # transaction_summary_file = sys.argv[2]
-    #
-    # # R1:
-    # user_input = input('what is the key?\n')
-    # if(user_input == 'login'):
-    #     print('here is the content')
-    #     with open(valid_account_list_file) as rf:
-    #         print(rf.read())
-    #     print('writing transactions...')
-    #     with open(transaction_summary_file, 'w') as wf:
-    #         wf.write('hmm i am a transaction.')
-    #         exit
-    # else:
-    #     print('omg wrong key')
 
 
 def R1():
-    print('landing')
     if status:
-        print('Your Balance:', balance)  # print out the user's balance
-        input1 = input('Type your choice:\nsell  buy  update  logout\n')
+        print('your balance:', balance)  # print out the user's balance
+        input1 = input('type your choice:\nsell  buy  update  logout\n')
         if input1 == 'sell':  # user wants to go to sell session
             R4()
         elif input1 == 'buy':  # user wants to go to buy session
@@ -64,10 +37,10 @@ def R1():
         elif input1 == 'logout':  # user wants to go to logout session
             R7()
         else:  # user enters other invalid commands
-            print('Invalid command.')
+            print('invalid command')
             R1()
     if not status:
-        input1 = input('Type your choice:\nregister  login  exit\n')
+        input1 = input('type your choice:\nregister  login  exit\n')
         if input1 == 'register':  # user wants to go to register session
             R2()
         elif input1 == 'login':  # user wants to go to login session
@@ -75,113 +48,132 @@ def R1():
         elif input1 == 'exit':  # user wants to go to exit session
             R8()
         else:  # user enters other invalid commands
-            print('Invalid command.')
+            print('invalid command')
             R1()
 
-'''
-R2 will be the register session, which will allow user to register their account
-'''
+
 def R2():
+    # R2 will be the register session, which will allow user to register their account
     print('register session started successfully')
-    try: #if inputs are missing, call R2 again
-        register_email, register_name, register_password,register_password2 = input('please enter your email, user name, password and confirm your password:\n').split(',')
+    try:  # if inputs are missing, call R2 again
+        register_email, register_name, register_password, register_password2 = input('please enter your email, user '
+                                                                                     'name, password and confirm your '
+                                                                                     'password:\n').split(',')
     except:
-        print('Please retype!\nThe number of inputs should be 4.')
+        print('please retype\nthe number of inputs should be 4')
         R2()
-    #do the testing for user inputs, and outputs warning if there is any error. finally, go back to R1
-    if not (check_register_email(register_email) and check_exits_email(register_email) and check_register_name(register_name) and check_register_password(register_password) and check_register_password2(register_password,register_password2)):
+    # do the testing for user inputs, and outputs warning if there is any error. finally, go back to R1
+    if not (check_register_email(register_email) and check_exits_email(register_email) and check_register_name(
+            register_name) and check_register_password(register_password) and check_register_password2(
+        register_password, register_password2)):
         R1()
-    userWriter.writerow(['registration', register_name, register_email, register_password, 3000])#write registration information into file
+    tranWriter.writerow(['registration', register_name, register_email, register_password,
+                         3000])  # write registration information into file
+    tranFile.flush()
     print('account registered')
-    userFile.flush()
     R1()
 
 
 def R3():
-    print('Login session started successfully!')
-    try:
-        login_email, login_password = input('Please type your email and password').split(',')
+    print('login session started successfully')
+    try:  # if inputs are missing, call R3 again
+        login_email, login_password = input('please type your email and password:').split(',')
     except:
-        print('Please retype!\nThe number of inputs should be 2.')
+        print('please retype\nthe number of inputs should be 2')
+        R3()
     if not (check_register_email(login_email) and check_register_password(login_password)):
-        R1()
-    for i in userReader:
+        R1()  # check the format of inputs. return R1 if there is anything invalid
+    for i in userReader:  # go over every user info to check login
         if login_email == userReader[i][0] and login_password == userReader[i][2]:
             global status, user_name, user_email, user_password, balance
-            status = True
+            # set global value to be the user info if login succeeded
             user_name = userReader[i][1]
             user_email = userReader[i][0]
             user_password = userReader[i][2]
             balance = userReader[i][3]
+            status = True
             print('account logged in')
             R1()
         else:
+            # return R1 if failed
             print('login failed')
             R1()
 
 
 def R4():
-    print('Selling session started successfully!')
-    try:
-        ticket_name, price, quantity, date = input('Please type ticket name, price, quantity, date:').split(',')
+    print('selling session started successfully')
+    try:    # if inputs are missing, call R4 again
+        ticket_name, price, quantity, date = input('please type ticket name, price, quantity, date:').split(',')
     except:
-        print('Please retype!\nThe number of inputs should be 4.')
+        print('please retype\nthe number of inputs should be 4')
         R4()
     if not (check_ticket_name(ticket_name) and check_price(price) and check_quantity_sell(quantity) and check_date(
             date)):
-        R4()
+        R1()    # check the format of inputs. return R1 if there is anything invalid
     price = eval(price)
     price = round(price, 2)
-    tranWriter.writerow(['sell', user_name, ticket_name, price, quantity, date])
-    print('Selling transaction was created successfully.')
+    # write the transaction
+    tranWriter.writerow(['selling', user_name, ticket_name, price, quantity, date])
+    tranFile.flush()
+    print('selling transaction was created successfully')
     R1()
 
 
 def R5():
-    print('Buying session started successfully!')
-    try:
-        ticket_name, quantity = input('Please type ticket name, quantity:').split(',')
+    print('buying session started successfully')
+    try:    # if inputs are missing, call R5 again
+        ticket_name, quantity = input('please type ticket name, quantity:').split(',')
     except:
-        print('Please retype!\nThe number of inputs should be 2.')
-        R5()
-    for i in ticketReader:
+        print('please retype\nthe number of inputs should be 2')
+        R1()
+    for i in ticketReader:  # go over every ticket to check if exists
         if ticket_name == ticketReader[i][0]:
             price = ticketReader[i][1]
             aval_quantity = ticketReader[i][2]
-    if not(check_ticket_name(ticket_name) and check_quantity_buy(price, quantity, aval_quantity)):
-        R5()
+        else:
+            print('the ticket does not exist')
+            R1()
+    if not (check_ticket_name(ticket_name) and check_quantity_buy(price, quantity, aval_quantity)):
+        R5()    # check the format of inputs. return R1 if there is anything invalid
     price = eval(price)
     price = round(price, 2)
-    tranWriter.writerow(['sell', user_name, ticket_name, price, quantity])
-    print('Buying transaction was created successfully.')
+    # write the transaction
+    tranWriter.writerow(['buying', user_name, ticket_name, price, quantity])
+    tranFile.flush()
+    print('buying transaction was created successfully')
     R1()
 
 
 def R6():
-    print('Updating session started successfully!')
-    try:
-        ticket_name, price, quantity, date = input('Please type ticket name, price, quantity, date:').split(',')
+    print('updating session started successfully')
+    try:    # if inputs are missing, call R6 again
+        ticket_name, price, quantity, date = input('please type ticket name, price, quantity, date:').split(',')
     except:
-        print('Please retype!\nThe number of inputs should be 4.')
+        print('please retype\nthe number of inputs should be 4')
         R6()
     if not (check_ticket_name(ticket_name) and check_price(price) and check_quantity_sell(quantity) and check_date(
             date)):
-        R6()
+        R6()    # check the format of inputs. return R1 if there is anything invalid
     price = eval(price)
     price = round(price, 2)
-    tranWriter.writerow(['sell', user_name, ticket_name, price, quantity])
-    print('Updating transaction was created successfully.')
+    # write the transaction
+    tranWriter.writerow(['updating', user_name, ticket_name, price, quantity])
+    tranFile.flush()
+    print('updating transaction was created successfully')
     R1()
 
 
 def R7():
-    print('logout')
-    global status
+    global status, user_name, user_email, user_password, balance
     if status:  # user already logged in
         print("logout successfully")
+        user_name = ''
+        user_email = ''
+        user_password = ''
+        balance = -1
         status = False
     else:  # user has not logged in
-        print("You are not login\nPlease enter login")
+        print("you are not login\nplease enter login")
 
 
 def R8():
@@ -193,46 +185,65 @@ def R8():
     exit(0)
 
 
-# 48-57 65-90 97-122
+'''
+this function will check the ticket name format
+'''
+
+
 def check_ticket_name(ticket_name):
     if not (ticket_name.isalnum() or ticket_name.isspace()):
-        print('Selling transaction was created unsuccessfully.\nPlease retype!\nTicket name should be '
-              'alphanumeric-only.')
+        print('transaction was created unsuccessfully\nplease retype\nticket name should be '
+              'alphanumeric-only')
         return False
     if not (ticket_name[0].isspace() or ticket_name[len(ticket_name) - 1].isspace):
-        print('Selling transaction was created unsuccessfully.\nPlease retype!\nSpace allowed only if it is not the '
-              'first or the last character.')
+        print('transaction was created unsuccessfully\nplease retype\nspace allowed only if it is not the '
+              'first or the last character')
         return False
     elif len(ticket_name) > 60:
-        print('Selling transaction was created unsuccessfully.\nPlease retype!\nThe ticket name should be no longer '
-              'than 60 characters.')
+        print('transaction was created unsuccessfully\nplease retype\nthe ticket name should be no longer '
+              'than 60 characters')
         return False
     return True
+
+
+'''
+this function will check the price valid
+'''
 
 
 def check_price(price):
     if not (price.isdigit()):
-        print('Selling transaction was created unsuccessfully.\nPlease retype!\nThe ticket price should be numeric.')
+        print('transaction was created unsuccessfully\nplease retype\nthe ticket price should be numeric')
         return False
     price = eval(price)
     if not (10 <= price <= 100):
-        print('Selling transaction was created unsuccessfully.\nPlease retype!\nThe ticket price should be of range ['
-              '10, 100].')
+        print('transaction was created unsuccessfully\nplease retype\nthe ticket price should be of range ['
+              '10, 100]')
         return False
     return True
+
+
+'''
+this function will check the quantity valid when selling
+'''
 
 
 def check_quantity_sell(quantity):
     quantity = eval(quantity)
     if not (isinstance(quantity, int)):
-        print('Selling transaction was created unsuccessfully.\nPlease retype!\nThe ticket quantity should be an '
-              'integer.')
+        print('transaction was created unsuccessfully\nplease retype\nthe ticket quantity should be an '
+              'integer')
         return False
     if not (0 < quantity <= 100):
-        print('Selling transaction was created unsuccessfully.\nPlease retype!\nThe quantity of the tickets has to be '
-              'more than 0, and less than or equal to 100.')
+        print('transaction was created unsuccessfully\nplease retype\nthe quantity of the tickets has to be '
+              'more than 0, and less than or equal to 100')
         return False
     return True
+
+
+'''
+this function will check date format
+'''
 
 
 def check_date(date):
@@ -240,90 +251,114 @@ def check_date(date):
         time.strptime(date, "%Y%m%d")
         return True
     except:
-        print('Selling transaction was created unsuccessfully.\nPlease retype!\nDate must be given in the format '
-              'YYYYMMDD.')
+        print('transaction was created unsuccessfully\nplease retype\ndate must be given in the format '
+              'YYYYMMDD')
         return False
+
+
+'''
+this function will check the quantity valid when buying
+'''
 
 
 def check_quantity_buy(price, quantity, aval_quantity):
     quantity = eval(quantity)
     aval_quantity = eval(aval_quantity)
     if not (isinstance(quantity, int)):
-        print('Selling transaction was created unsuccessfully.\nPlease retype!\nThe ticket quantity should be an '
-              'integer.')
+        print('transaction was created unsuccessfully\nplease retype\nthe ticket quantity should be an '
+              'integer')
         return False
     if not (0 < quantity <= aval_quantity):
-        print('Selling transaction was created unsuccessfully.\nPlease retype!\nThe quantity of the tickets has to be '
-              'more than 0, and less than or equal to the available quantity.')
+        print('transaction was created unsuccessfully\nplease retype\nthe quantity of the tickets has to be '
+              'more than 0, and less than or equal to the available quantity')
         return False
     elif not (balance >= price * quantity * 1.35 * 1.05):
-        print('Selling transaction was created unsuccessfully.\nPlease retype!\nYour balance is insufficient.')
+        print('transaction was created unsuccessfully\nplease retype\nyour balance is insufficient')
         return False
     return True
+
 
 '''
 this function will take an string of user email as input, and True or False as output
 it will check if the format of email is correct 
 '''
-def check_register_email(register_email) :
-    #if the format of input email is not as follows, return false
+
+
+def check_register_email(register_email):
+    # if the format of input email is not as follows, return false
     if re.match("^.+\\@(\\[?)[a-zA-Z0-9\\-\\.]+\\.([a-zA-Z]{2,3}|[0-9]{1,3})(\\]?)$", register_email) is None:
         print("email format is incorrect\n")
         return False
     return True
 
+
 '''
 this function will take an string of user email as input, and True or False as output
 it will check  if the email is already exits 
 '''
-def check_exits_email(register_email) :
+
+
+def check_exits_email(register_email):
     userReader = csv.reader(open('user.csv', 'r'))  # read the file
     # if input email already exits, return False
     for i in userReader:
         if register_email == i[2]:
-            print("account exits.\n")
+            print("account exits\n")
             return False
     return True
+
 
 '''
 this function will take an string of user name as input, and True or False as output
 it will check if the format of user name is correct
 '''
+
+
 def check_register_name(register_name):
-    #name can only be alphanumerical
+    # name can only be alphanumerical
     if not (register_name.isalnum() or register_name.isspace()):
-        print('user name format is incorrect.(User name should be alphanumeric-only.)\n')
+        print('user name format is incorrect (User name should be alphanumeric-only)\n')
         return False
-    #space allowed only if it's not the first and last character
+    # space allowed only if it's not the first and last character
     if not (register_name[0].isspace() or register_name[len(register_name) - 1].isspace):
-        print('user name format is incorrect.(Space allowed only if it is not the first or the last character.)\n')
+        print('user name format is incorrect (Space allowed only if it is not the first or the last character)\n')
         return False
-    #length of name should be longer than 2 and shorter than 20
+    # length of name should be longer than 2 and shorter than 20
     elif len(register_name) > 20 or len(register_name) < 2:
-        print('user name format is incorrect.(User name should be longer than 2 and shorter that 20 characters.)\n')
+        print('user name format is incorrect (User name should be longer than 2 and shorter that 20 characters)\n')
         return False
     return True
+
+
 '''
 this function will take an string of user password as input, and True or False as output
 it will check if the format of user password is correct
 '''
+
+
 def check_register_password(register_password):
     # if the format of input password is not as follows, return false
-    #at least one upper and one lower case with special characters, minimum 6 in length
+    # at least one upper and one lower case with special characters, minimum 6 in length
     pattern = r'^(?![A-Za-z0-9]+$)(?![a-z0-9\\W]+$)(?![A-Za-z\\W]+$)(?![A-Z0-9\\W]+$)^.{6,}$'
     res = re.search(pattern, register_password)
     if res:
         return True
     print('password format is incorrect\n')
     return False
+
+
 '''
 this function will take two string of user password as input, and True or False as output
 it will check if two input are the same
 '''
-def check_register_password2(register_password,register_password2):
+
+
+def check_register_password2(register_password, register_password2):
     if register_password == register_password2:
         return True
     print("two password doesn't match, please confirm your password\n")
     return False
 
-main()
+
+if __name__ == "__main__":
+    main()
