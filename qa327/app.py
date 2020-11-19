@@ -59,8 +59,9 @@ def R2():
     except:
         #optin to exit
         print('please retype\nthe number of inputs should be 4 or exit')
-        exitOrNot = input('do you want to exit register session(type exit to leave):\n')
 
+        exitOrNot = input('do you want to exit register session(type exit to leave):\n')
+        
         if exitOrNot == 'exit':
             R1()
         R2()
