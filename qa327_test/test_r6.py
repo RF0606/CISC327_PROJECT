@@ -285,5 +285,5 @@ def helper(
                 if i == '':
                     continue
                 if i != '':
-                    assert content[len(content) - 2] == expected_output_transactions
+                    assert i == expected_output_transactions
                     break
