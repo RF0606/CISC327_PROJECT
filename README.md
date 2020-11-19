@@ -1,6 +1,6 @@
 # CI-Python
 
-[![](https://github.com/CISC-CMPE-327/CI-Python/workflows/Python%20application/badge.svg)](https://github.com/CISC-CMPE-327/CI-Python/actions)
+[![](https://github.com/RF0606/CISC327_PROJECT/workflows/Python%20application/badge.svg)](https://github.com/RF0606/CISC327_PROJECT/actions)
 
 ### Python CI template for GitHub Actions
 
