@@ -57,13 +57,19 @@ def R2():
                                                                                      'name, password and confirm your '
                                                                                      'password:\n').split(',')
     except:
-        print('please retype\nthe number of inputs should be 4')
+        #optin to exit
+        print('please retype\nthe number of inputs should be 4 or exit')
+        exitOrNot = input('do you want to exit register session(type exit to leave):')
+        if exitOrNot == 'exit':
+            R1()
         R2()
+
     # do the testing for user inputs, and outputs warning if there is any error. finally, go back to R1
     if not (check_register_email(register_email) and check_exits_email(register_email) and check_register_name(
             register_name) and check_register_password(register_password) and check_register_password2(
         register_password, register_password2)):
         R1()
+
     tranWriter.writerow(['registration', register_name, register_email, register_password,
                          3000])  # write registration information into file
     tranFile.flush()
@@ -299,10 +305,21 @@ it will check  if the email is already exits
 
 
 def check_exits_email(register_email):
+    tranReader = csv.reader(open('transaction.csv', 'r'))  # read the file
+    # if input email already exits, return False
+    for i in tranReader:
+        if i == '':
+            continue
+        elif register_email == i[2]:
+            print("account exits\n")
+            return False
+
     userReader = csv.reader(open('user.csv', 'r'))  # read the file
     # if input email already exits, return False
     for i in userReader:
-        if register_email == i[2]:
+        if i == '':
+            continue
+        elif register_email == i[0]:
             print("account exits\n")
             return False
     return True
@@ -316,15 +333,15 @@ it will check if the format of user name is correct
 
 def check_register_name(register_name):
     # name can only be alphanumerical
-    if not (register_name.isalnum() or register_name.isspace()):
+    if not (register_name.isalnum() or ' ' in register_name):
         print('user name format is incorrect (User name should be alphanumeric-only)\n')
         return False
     # space allowed only if it's not the first and last character
-    if not (register_name[0].isspace() or register_name[len(register_name) - 1].isspace):
+    if (register_name[0] == ' ' or register_name[len(register_name) - 1] == ' '):
         print('user name format is incorrect (Space allowed only if it is not the first or the last character)\n')
         return False
     # length of name should be longer than 2 and shorter than 20
-    elif len(register_name) > 20 or len(register_name) < 2:
+    elif len(register_name) >= 20 or len(register_name) <= 2 :
         print('user name format is incorrect (User name should be longer than 2 and shorter that 20 characters)\n')
         return False
     return True
@@ -339,9 +356,13 @@ it will check if the format of user password is correct
 def check_register_password(register_password):
     # if the format of input password is not as follows, return false
     # at least one upper and one lower case with special characters, minimum 6 in length
-    pattern = r'^(?![A-Za-z0-9]+$)(?![a-z0-9\\W]+$)(?![A-Za-z\\W]+$)(?![A-Z0-9\\W]+$)^.{6,}$'
-    res = re.search(pattern, register_password)
-    if res:
+    #pattern = r'^(?![A-Za-z0-9]+$)(?![a-z0-9\\W]+$)(?![A-Za-z\\W]+$)(?![A-Z0-9\\W]+$)^.{6,}$'
+    pattern = '^(?=.*[a-z])(?=.*[A-Z])(?=.*[-+_!@#$%^&*., ?])^.{6,}$'
+
+    # Compile the ReGex
+    res = re.compile(pattern)
+
+    if re.search(res, register_password):
         return True
     print('password format is incorrect\n')
     return False
