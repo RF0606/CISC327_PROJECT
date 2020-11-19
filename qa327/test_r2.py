@@ -4,7 +4,7 @@ import pytest
 import os
 import io
 import sys
-import app as app
+import qa327.app as app
 
 path = os.path.dirname(os.path.abspath(__file__))
 
