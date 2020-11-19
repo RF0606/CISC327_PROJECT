@@ -57,13 +57,20 @@ def R2():
                                                                                      'name, password and confirm your '
                                                                                      'password:\n').split(',')
     except:
-        print('please retype\nthe number of inputs should be 4')
+
+        #optin to exit
+        print('please retype\nthe number of inputs should be 4 or exit')
+        exitOrNot = input('do you want to exit register session(type exit to leave):\n')
+        if exitOrNot == 'exit':
+            R1()
         R2()
+
     # do the testing for user inputs, and outputs warning if there is any error. finally, go back to R1
     if not (check_register_email(register_email) and check_exits_email(register_email) and check_register_name(
             register_name) and check_register_password(register_password) and check_register_password2(
         register_password, register_password2)):
         R1()
+
     tranWriter.writerow(['registration', register_name, register_email, register_password,
                          3000])  # write registration information into file
     tranFile.flush()
@@ -77,7 +84,7 @@ def R3():
         login_email, login_password = input('please type your email and password:\n').split(',')
     except:
         print('please retype\nthe number of inputs should be 2')
-        R3()
+        R1()
     if not (check_register_email(login_email) and check_register_password(login_password)):
         R1()  # check the format of inputs. return R1 if there is anything invalid
     for i in userReader:  # go over every user info to check login
@@ -103,7 +110,7 @@ def R4():
         ticket_name, price, quantity, date = input('please type ticket name, price, quantity, date:').split(',')
     except:
         print('please retype\nthe number of inputs should be 4')
-        R4()
+        R1()
     if not (check_ticket_name(ticket_name) and check_price(price) and check_quantity_sell(quantity) and check_date(
             date)):
         R1()    # check the format of inputs. return R1 if there is anything invalid
@@ -147,7 +154,7 @@ def R6():
         ticket_name, price, quantity, date = input('please type ticket name, price, quantity, date:').split(',')
     except:
         print('please retype\nthe number of inputs should be 4')
-        R6()
+        R1()
     if not (check_ticket_name(ticket_name) and check_price(price) and check_quantity_sell(quantity) and check_date(
             date)):
         R6()    # check the format of inputs. return R1 if there is anything invalid
