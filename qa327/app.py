@@ -8,14 +8,11 @@ user_email = ''
 user_password = ''
 balance = -1
 
-userFile = open('user.csv', 'a+')
-ticketFile = open('ticket.csv', 'a+')
+userFile = open('user.csv', 'r')
+ticketFile = open('ticket.csv', 'r')
 tranFile = open('transaction.csv', 'a+')
 userReader = csv.reader(userFile)
-userWriter = csv.writer(userFile)
 ticketReader = csv.reader(ticketFile)
-ticketWriter = csv.writer(ticketFile)
-tranReader = csv.reader(tranFile)
 tranWriter = csv.writer(tranFile)
 
 
@@ -84,13 +81,13 @@ def R3():
     if not (check_register_email(login_email) and check_register_password(login_password)):
         R1()  # check the format of inputs. return R1 if there is anything invalid
     for i in userReader:  # go over every user info to check login
-        if login_email == userReader[i][0] and login_password == userReader[i][2]:
+        if login_email == i[0] and login_password == i[2]:
             global status, user_name, user_email, user_password, balance
             # set global value to be the user info if login succeeded
-            user_name = userReader[i][1]
-            user_email = userReader[i][0]
-            user_password = userReader[i][2]
-            balance = userReader[i][3]
+            user_name = i[1]
+            user_email = i[0]
+            user_password = i[2]
+            balance = i[3]
             status = True
             print('account logged in')
             R1()
@@ -127,9 +124,9 @@ def R5():
         print('please retype\nthe number of inputs should be 2')
         R1()
     for i in ticketReader:  # go over every ticket to check if exists
-        if ticket_name == ticketReader[i][0]:
-            price = ticketReader[i][1]
-            aval_quantity = ticketReader[i][2]
+        if ticket_name == i[0]:
+            price = i[1]
+            aval_quantity = i[2]
         else:
             print('the ticket does not exist')
             R1()
