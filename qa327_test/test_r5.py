@@ -253,4 +253,9 @@ def helper(
             print('output transactions:', content)
             print('output transactions (expected):', expected_output_transactions)
 
-            assert content[len(content)-2] == expected_output_transactions
+            for i in reversed(content):
+                if i == '':
+                    continue
+                if i != '':
+                    assert content[len(content) - 2] == expected_output_transactions
+                    break
