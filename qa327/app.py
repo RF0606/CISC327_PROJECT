@@ -119,10 +119,12 @@ def R4():
 def R5():
     print('buying session started successfully')
     try:    # if inputs are missing, call R5 again
-        ticket_name, quantity = input('please type ticket name, quantity:').split(',')
+        ticket_name, quantity = input('please type ticket name, quantity:\n').split(',')
     except:
         print('please retype\nthe number of inputs should be 2')
         R1()
+    if not (check_ticket_name(ticket_name)):
+        R1()    # check the format of inputs. return R1 if there is anything invalid
     for i in ticketReader:  # go over every ticket to check if exists
         if ticket_name == i[0]:
             price = i[1]
@@ -130,8 +132,8 @@ def R5():
         else:
             print('the ticket does not exist')
             R1()
-    if not (check_ticket_name(ticket_name) and check_quantity_buy(price, quantity, aval_quantity)):
-        R5()    # check the format of inputs. return R1 if there is anything invalid
+    if not (check_quantity_buy(price, quantity, aval_quantity)):
+        R1()    # check the format of inputs. return R1 if there is anything invalid
     price = eval(price)
     price = round(price, 2)
     # write the transaction
@@ -144,13 +146,13 @@ def R5():
 def R6():
     print('updating session started successfully')
     try:    # if inputs are missing, call R6 again
-        ticket_name, price, quantity, date = input('please type ticket name, price, quantity, date:').split(',')
+        ticket_name, price, quantity, date = input('please type ticket name, price, quantity, date:\n').split(',')
     except:
         print('please retype\nthe number of inputs should be 4')
         R6()
     if not (check_ticket_name(ticket_name) and check_price(price) and check_quantity_sell(quantity) and check_date(
             date)):
-        R6()    # check the format of inputs. return R1 if there is anything invalid
+        R1()    # check the format of inputs. return R1 if there is anything invalid
     price = eval(price)
     price = round(price, 2)
     # write the transaction
@@ -259,6 +261,7 @@ this function will check the quantity valid when buying
 
 
 def check_quantity_buy(price, quantity, aval_quantity):
+    price = eval(price)
     quantity = eval(quantity)
     aval_quantity = eval(aval_quantity)
     if not (isinstance(quantity, int)):
@@ -269,7 +272,7 @@ def check_quantity_buy(price, quantity, aval_quantity):
         print('transaction was created unsuccessfully\nplease retype\nthe quantity of the tickets has to be '
               'more than 0, and less than or equal to the available quantity')
         return False
-    elif not (balance >= price * quantity * 1.35 * 1.05):
+    elif not (int(balance) >= price * quantity * 1.35 * 1.05):
         print('transaction was created unsuccessfully\nplease retype\nyour balance is insufficient')
         return False
     return True
