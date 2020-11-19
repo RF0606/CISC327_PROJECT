@@ -83,7 +83,7 @@ def R3():
         login_email, login_password = input('please type your email and password:\n').split(',')
     except:
         print('please retype\nthe number of inputs should be 2')
-        R3()
+        R1()
     if not (check_register_email(login_email) and check_register_password(login_password)):
         R1()  # check the format of inputs. return R1 if there is anything invalid
     for i in userReader:  # go over every user info to check login
@@ -109,7 +109,7 @@ def R4():
         ticket_name, price, quantity, date = input('please type ticket name, price, quantity, date:\n').split(',')
     except:
         print('please retype\nthe number of inputs should be 4')
-        R4()
+        R1()
     if not (check_ticket_name(ticket_name) and check_price(price) and check_quantity_sell(quantity) and check_date(
             date)):
         R1()    # check the format of inputs. return R1 if there is anything invalid
@@ -155,7 +155,7 @@ def R6():
         ticket_name, price, quantity, date = input('please type ticket name, price, quantity, date:\n').split(',')
     except:
         print('please retype\nthe number of inputs should be 4')
-        R6()
+        R1()
     if not (check_ticket_name(ticket_name) and check_price(price) and check_quantity_sell(quantity) and check_date(
             date)):
         R1()    # check the format of inputs. return R1 if there is anything invalid
