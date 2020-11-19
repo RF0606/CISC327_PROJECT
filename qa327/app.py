@@ -74,7 +74,7 @@ def R2():
 def R3():
     print('login session started successfully')
     try:  # if inputs are missing, call R3 again
-        login_email, login_password = input('please type your email and password:').split(',')
+        login_email, login_password = input('please type your email and password:\n').split(',')
     except:
         print('please retype\nthe number of inputs should be 2')
         R3()
