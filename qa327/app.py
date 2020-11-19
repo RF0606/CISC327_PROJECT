@@ -74,7 +74,7 @@ def R2():
 def R3():
     print('login session started successfully')
     try:  # if inputs are missing, call R3 again
-        login_email, login_password = input('please type your email and password:').split(',')
+        login_email, login_password = input('please type your email and password:\n').split(',')
     except:
         print('please retype\nthe number of inputs should be 2')
         R3()
@@ -100,7 +100,7 @@ def R3():
 def R4():
     print('selling session started successfully')
     try:    # if inputs are missing, call R4 again
-        ticket_name, price, quantity, date = input('please type ticket name, price, quantity, date:').split(',')
+        ticket_name, price, quantity, date = input('please type ticket name, price, quantity, date:\n').split(',')
     except:
         print('please retype\nthe number of inputs should be 4')
         R4()
@@ -110,7 +110,7 @@ def R4():
     price = eval(price)
     price = round(price, 2)
     # write the transaction
-    tranWriter.writerow(['selling', user_name, ticket_name, price, quantity, date])
+    tranWriter.writerow(['selling', user_name, ticket_name, price, quantity])
     tranFile.flush()
     print('selling transaction was created successfully')
     R1()
@@ -188,11 +188,11 @@ this function will check the ticket name format
 
 
 def check_ticket_name(ticket_name):
-    if not (ticket_name.isalnum() or ticket_name.isspace()):
+    if not (ticket_name.replace(' ','').isalnum()):
         print('transaction was created unsuccessfully\nplease retype\nticket name should be '
               'alphanumeric-only')
         return False
-    if not (ticket_name[0].isspace() or ticket_name[len(ticket_name) - 1].isspace):
+    if ticket_name[0].isspace() or ticket_name[len(ticket_name) - 1].isspace():
         print('transaction was created unsuccessfully\nplease retype\nspace allowed only if it is not the '
               'first or the last character')
         return False
