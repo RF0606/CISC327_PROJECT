@@ -305,15 +305,6 @@ it will check  if the email is already exits
 
 
 def check_exits_email(register_email):
-    tranReader = csv.reader(open('transaction.csv', 'r'))  # read the file
-    # if input email already exits, return False
-    for i in tranReader:
-        if i == '':
-            continue
-        elif register_email == i[2]:
-            print("account exits\n")
-            return False
-
     userReader = csv.reader(open('user.csv', 'r'))  # read the file
     # if input email already exits, return False
     for i in userReader:
