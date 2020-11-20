@@ -57,7 +57,7 @@ def test_exit_all(capsys):
                                         'type your choice:',
                                         'register  login  exit',
                                         'exit']
-    expected_output_transactions = []
+    expected_output_transactions = ''
     helper(capsys, terminal_input, intput_valid_accounts, expected_tail_of_terminal_output,
            expected_output_transactions)
 
@@ -76,7 +76,7 @@ def test_empty_email(capsys):
                                         'type your choice:',
                                         'register  login  exit',
                                         'exit']
-    expected_output_transactions = []
+    expected_output_transactions = ''
     helper(capsys, terminal_input, intput_valid_accounts, expected_tail_of_terminal_output,
            expected_output_transactions)
 
@@ -95,7 +95,7 @@ def test_empty_password(capsys):
                                         'type your choice:',
                                         'register  login  exit',
                                         'exit']
-    expected_output_transactions = []
+    expected_output_transactions = ''
     helper(capsys, terminal_input, intput_valid_accounts, expected_tail_of_terminal_output,
            expected_output_transactions)
 
@@ -114,7 +114,7 @@ def test_wrong_email(capsys):
                                         'type your choice:',
                                         'register  login  exit',
                                         'exit']
-    expected_output_transactions = []
+    expected_output_transactions = ''
     helper(capsys, terminal_input, intput_valid_accounts, expected_tail_of_terminal_output,
            expected_output_transactions)
 
@@ -133,7 +133,7 @@ def test_wrong_length_password(capsys):
                                         'type your choice:',
                                         'register  login  exit',
                                         'exit']
-    expected_output_transactions = []
+    expected_output_transactions = ''
     helper(capsys, terminal_input, intput_valid_accounts, expected_tail_of_terminal_output,
            expected_output_transactions)
 
@@ -152,7 +152,7 @@ def test_no_Uppercase_password(capsys):
                                         'type your choice:',
                                         'register  login  exit',
                                         'exit']
-    expected_output_transactions = []
+    expected_output_transactions = ''
     helper(capsys, terminal_input, intput_valid_accounts, expected_tail_of_terminal_output,
            expected_output_transactions)
 
@@ -171,7 +171,7 @@ def test_no_Lowercase_password(capsys):
                                         'type your choice:',
                                         'register  login  exit',
                                         'exit']
-    expected_output_transactions = []
+    expected_output_transactions = ''
     helper(capsys, terminal_input, intput_valid_accounts, expected_tail_of_terminal_output,
            expected_output_transactions)
 
@@ -190,7 +190,7 @@ def test_no_specialChar_password(capsys):
                                         'type your choice:',
                                         'register  login  exit',
                                         'exit']
-    expected_output_transactions = []
+    expected_output_transactions = ''
     helper(capsys, terminal_input, intput_valid_accounts, expected_tail_of_terminal_output,
            expected_output_transactions)
 
@@ -209,7 +209,7 @@ def test_unequal_password (capsys):
                                         'type your choice:',
                                         'register  login  exit',
                                         'exit']
-    expected_output_transactions = []
+    expected_output_transactions = ''
     helper(capsys, terminal_input, intput_valid_accounts, expected_tail_of_terminal_output,
            expected_output_transactions)
 
@@ -228,7 +228,7 @@ def test_empty_usrename(capsys):
                                         'type your choice:',
                                         'register  login  exit',
                                         'exit']
-    expected_output_transactions = []
+    expected_output_transactions = ''
     helper(capsys, terminal_input, intput_valid_accounts, expected_tail_of_terminal_output,
            expected_output_transactions)
 
@@ -247,7 +247,7 @@ def test_specialChar_usrename(capsys):
                                         'type your choice:',
                                         'register  login  exit',
                                         'exit']
-    expected_output_transactions = []
+    expected_output_transactions = ''
     helper(capsys, terminal_input, intput_valid_accounts, expected_tail_of_terminal_output,
            expected_output_transactions)
 
@@ -266,7 +266,7 @@ def test_space_atFist_usrename(capsys):
                                         'type your choice:',
                                         'register  login  exit',
                                         'exit']
-    expected_output_transactions = []
+    expected_output_transactions = ''
     helper(capsys, terminal_input, intput_valid_accounts, expected_tail_of_terminal_output,
            expected_output_transactions)
 
@@ -285,7 +285,7 @@ def test_space_atLast_usrename(capsys):
                                         'type your choice:',
                                         'register  login  exit',
                                         'exit']
-    expected_output_transactions = []
+    expected_output_transactions = ''
     helper(capsys, terminal_input, intput_valid_accounts, expected_tail_of_terminal_output,
            expected_output_transactions)
 
@@ -323,7 +323,7 @@ def test_less_length_usrename(capsys):
                                         'type your choice:',
                                         'register  login  exit',
                                         'exit']
-    expected_output_transactions = []
+    expected_output_transactions = ''
     helper(capsys, terminal_input, intput_valid_accounts, expected_tail_of_terminal_output,
            expected_output_transactions)
 
@@ -342,39 +342,15 @@ def test_less_length_usrename(capsys):
                                         'type your choice:',
                                         'register  login  exit',
                                         'exit']
-    expected_output_transactions = []
+    expected_output_transactions = ''
     helper(capsys, terminal_input, intput_valid_accounts, expected_tail_of_terminal_output,
            expected_output_transactions)
 
-'''test case R2.10.2 email exits in known account in transaction.csv(negative)
-'''
-def test_exit_email_transaction(capsys):
-    terminal_input = ['register','test@test1.com,testname,Test_password,Test_password',
-                      'register','test@test1.com,testname,Test_password,Test_password','exit']
-    intput_valid_accounts = []
-    expected_tail_of_terminal_output = ['Welcome the Queens ticket trade machine',
-                                        'type your choice:',
-                                        'register  login  exit',
-                                        'register session started successfully',
-                                        'please enter your email, user name, password and confirm your password:',
-                                        'account registered',
-                                        'type your choice:',
-                                        'register  login  exit',
-                                        'register session started successfully',
-                                        'please enter your email, user name, password and confirm your password:',
-                                        'account exits',
-                                        '',
-                                        'type your choice:',
-                                        'register  login  exit',
-                                        'exit']
-    expected_output_transactions = 'registration,testname,test@test1.com,Test_password,3000'
-    helper(capsys, terminal_input, intput_valid_accounts, expected_tail_of_terminal_output,
-           expected_output_transactions)
 
 '''test case R2.10.2 email exits in known account in user.csv(negative)
 '''
 def test_exit_email_usercsv(capsys):
-    terminal_input = ['register','test@test.com,testname,Test_password,Test_password','exit']
+    terminal_input = ['register','test@test.com,test_name,Test_password,Test_password','exit']
     intput_valid_accounts = []
     expected_tail_of_terminal_output = ['Welcome the Queens ticket trade machine',
                                         'type your choice:',
@@ -386,7 +362,7 @@ def test_exit_email_usercsv(capsys):
                                         'type your choice:',
                                         'register  login  exit',
                                         'exit']
-    expected_output_transactions = 'registration,testname,test@test1.com,Test_password,3000'
+    expected_output_transactions = ''
     helper(capsys, terminal_input, intput_valid_accounts, expected_tail_of_terminal_output,
            expected_output_transactions)
 
@@ -449,7 +425,3 @@ def helper(
                     if i != '':
                         assert i == expected_output_transactions
                         break
-
-        current_path = os.path.realpath("transaction.csv")
-        if os.path.exists(current_path):
-            os.remove(current_path)
