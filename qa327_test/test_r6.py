@@ -10,7 +10,7 @@ path = os.path.dirname(os.path.abspath(__file__))
 
 '''test case R6.x.1'''
 def test_successful_case(capsys):
-    terminal_input = ['login','test@test.com,Pass123..','update','asd123,50,10,20201010','logout','exit']
+    terminal_input = ['login','test@test.com,Pass123..','update','testticket,50,10,20201010','logout','exit']
     expected_tail_of_terminal_output = ['Welcome the Queens ticket trade machine',
                                         'type your choice:',
                                         'register  login  exit',
@@ -30,7 +30,7 @@ def test_successful_case(capsys):
                                         'type your choice:',
                                         'register  login  exit',
                                         'exit']
-    expected_output_transactions = 'updating,test_name,asd123,50,10'
+    expected_output_transactions = 'updating,test@test.com,testticket,50,10'
     helper(capsys, terminal_input, expected_tail_of_terminal_output, expected_output_transactions)
 
 

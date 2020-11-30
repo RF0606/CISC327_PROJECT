@@ -30,7 +30,7 @@ def test_successful_case(capsys):
                                         'type your choice:',
                                         'register  login  exit',
                                         'exit']
-    expected_output_transactions = 'buying,test_name,testticket,90,3'
+    expected_output_transactions = 'buying,test@test.com,testticket,90,3'
     helper(capsys, terminal_input, expected_tail_of_terminal_output, expected_output_transactions)
 
 

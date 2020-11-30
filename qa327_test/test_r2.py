@@ -347,7 +347,7 @@ def test_less_length_usrename(capsys):
            expected_output_transactions)
 
 
-'''test case R2.10.2 email exits in known account in user.csv(negative)
+'''test case R2.10.2 email exits in known account in accounts.csv(negative)
 '''
 def test_exit_email_usercsv(capsys):
     terminal_input = ['register','test@test.com,test_name,Test_password,Test_password','exit']

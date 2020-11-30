@@ -8,10 +8,10 @@ user_email = ''
 user_password = ''
 balance = -1
 
-userFile = open('user.csv', 'r')
-ticketFile = open('ticket.csv', 'r')
+accFile = open('accounts.csv', 'r')
+ticketFile = open('tickets.csv', 'r')
 tranFile = open('transaction.csv', 'a+')
-userReader = csv.reader(userFile)
+accReader = csv.reader(accFile)
 ticketReader = csv.reader(ticketFile)
 tranWriter = csv.writer(tranFile)
 
@@ -86,7 +86,7 @@ def R3():
         R1()
     if not (check_register_email(login_email) and check_register_password(login_password)):
         R1()  # check the format of inputs. return R1 if there is anything invalid
-    for i in userReader:  # go over every user info to check login
+    for i in accReader:  # go over every user info to check login
         if login_email == i[0] and login_password == i[2]:
             global status, user_name, user_email, user_password, balance
             # set global value to be the user info if login succeeded
@@ -116,7 +116,7 @@ def R4():
     price = eval(price)
     price = round(price, 2)
     # write the transaction
-    tranWriter.writerow(['selling', user_name, ticket_name, price, quantity])
+    tranWriter.writerow(['selling', user_email, ticket_name, price, quantity])
     tranFile.flush()
     print('selling transaction was created successfully')
     R1()
@@ -131,19 +131,21 @@ def R5():
         R1()
     if not (check_ticket_name(ticket_name)):
         R1()    # check the format of inputs. return R1 if there is anything invalid
+    count = 0
     for i in ticketReader:  # go over every ticket to check if exists
         if ticket_name == i[0]:
             price = i[1]
             aval_quantity = i[2]
-        else:
-            print('the ticket does not exist')
-            R1()
+            count += 1
+    if count == 0:
+        print('the ticket does not exist')
+        R1()
     if not (check_quantity_buy(price, quantity, aval_quantity)):
         R1()    # check the format of inputs. return R1 if there is anything invalid
     price = eval(price)
     price = round(price, 2)
     # write the transaction
-    tranWriter.writerow(['buying', user_name, ticket_name, price, quantity])
+    tranWriter.writerow(['buying', user_email, ticket_name, price, quantity])
     tranFile.flush()
     print('buying transaction was created successfully')
     R1()
@@ -159,10 +161,17 @@ def R6():
     if not (check_ticket_name(ticket_name) and check_price(price) and check_quantity_sell(quantity) and check_date(
             date)):
         R1()    # check the format of inputs. return R1 if there is anything invalid
+    count = 0
+    for i in ticketReader:  # go over every ticket to check if exists
+        if ticket_name == i[0] and user_email == i[3]:
+            count += 1
+    if count == 0:
+        print('the ticket does not exist')
+        R1()
     price = eval(price)
     price = round(price, 2)
     # write the transaction
-    tranWriter.writerow(['updating', user_name, ticket_name, price, quantity])
+    tranWriter.writerow(['updating', user_email, ticket_name, price, quantity])
     tranFile.flush()
     print('updating transaction was created successfully')
     R1()
@@ -184,7 +193,7 @@ def R7():
 def R8():
     print('exit')
     # close three resource files
-    userFile.close()
+    accFile.close()
     ticketFile.close()
     tranFile.close()
     exit(0)
@@ -305,9 +314,9 @@ it will check  if the email is already exits
 
 
 def check_exits_email(register_email):
-    userReader = csv.reader(open('user.csv', 'r'))  # read the file
+    accReader = csv.reader(open('accounts.csv', 'r'))  # read the file
     # if input email already exits, return False
-    for i in userReader:
+    for i in accReader:
         if i == '':
             continue
         elif register_email == i[0]:
