@@ -23,7 +23,27 @@ def main():
 
 
 def register_process():
-    pass
+    tranReader = list(csv.reader(open('transaction.csv', 'r')))  # read the file
+    # write registration in transaction file into updated account
+    # print(tranReader)
+
+    # delete any repeated email registration in transaction file, but reserve the first
+    i = 0
+    while i < len(tranReader):
+        n = 0
+        while n < len(tranReader):
+            if (tranReader[i][2] == tranReader[n][2]) & (i != n) & (tranReader[i][0] == 'registration'):
+                tranReader.remove(tranReader[n])
+                print('repeated email account')
+            else:
+                n += 1
+        i += 1
+
+    for line in tranReader:
+        # print(i[0])
+        if line[0] == 'registration':
+            # write the file in the order of email, name, password, balance
+            accWriter.writerow([line[2], line[1], line[3], line[4]])
 
 
 def sell_process():
