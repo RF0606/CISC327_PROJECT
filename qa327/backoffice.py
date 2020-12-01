@@ -27,7 +27,20 @@ def register_process():
 
 
 def sell_process():
-    pass
+    for i in tranReader: # read transaction.csv
+        if not i:
+            continue
+        if i[0] == "selling": # process selling transaction
+            #get info
+            user_email = i[1]
+            ticket_name = i[2]
+            price = i[3]
+            quantity = i[4]
+            # append the selling info to ticketReader list
+            ticketReader.append([ticket_name, price, quantity, user_email])
+
+
+
 
 
 def buy_process():
