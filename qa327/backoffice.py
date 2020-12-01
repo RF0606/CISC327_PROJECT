@@ -5,12 +5,19 @@ accFile = open('accounts.csv', 'r')
 ticketFile = open('tickets.csv', 'r')
 new_accFile = open('updated_accounts.csv', 'w+')
 new_ticketFile = open('updated_tickets.csv', 'w+')
-tranFile = open('transaction.csv', 'r')
 accReader = list(csv.reader(accFile))
 ticketReader = list(csv.reader(ticketFile))
 accWriter = csv.writer(new_accFile)
 ticketWriter = csv.writer(new_ticketFile)
-tranReader = csv.reader(tranFile)
+
+location_arg = open('backend_locations.txt', 'r').readline().split(',')     # read every transactions by input location args
+location_arg.sort()                                                         # sort in an alphabetical order
+tranReader = list(csv.reader(open(location_arg[0]+'_transactions.csv')))
+for x in location_arg:
+    if x == location_arg[0]:
+        continue
+    for y in list(csv.reader(open(x+'_transactions.csv', 'r'))):            # append all transactions into one list
+        tranReader.append(y)
 
 
 def main():
@@ -20,30 +27,31 @@ def main():
     update_process()
     accWriter.writerows(accReader)
     ticketWriter.writerows(ticketReader)
+    accFile.close()
+    ticketFile.close()
+    new_accFile.close()
+    new_ticketFile.close()
 
 
 def register_process():
-    tranReader = list(csv.reader(open('transaction.csv', 'r')))  # read the file
     # write registration in transaction file into updated account
-    # print(tranReader)
-
-    # delete any repeated email registration in transaction file, but reserve the first
-    i = 0
-    while i < len(tranReader):
-        n = 0
-        while n < len(tranReader):
-            if (tranReader[i][2] == tranReader[n][2]) & (i != n) & (tranReader[i][0] == 'registration'):
-                tranReader.remove(tranReader[n])
-                print('repeated email account')
-            else:
-                n += 1
-        i += 1
-
+    # skip any repeated email registration in transaction file
     for line in tranReader:
+        if not line:
+            continue
         # print(i[0])
         if line[0] == 'registration':
+            n = 0
+            for i in accReader:
+                if not i:
+                    continue
+                if line[2] == i[0]:
+                    n += 1
+            if n != 0:
+                print('repeated email account')
+                continue
             # write the file in the order of email, name, password, balance
-            accWriter.writerow([line[2], line[1], line[3], line[4]])
+            accReader.append([line[2], line[1], line[3], line[4]])
 
 
 def sell_process():
@@ -58,9 +66,6 @@ def sell_process():
             quantity = i[4]
             # append the selling info to ticketReader list
             ticketReader.append([ticket_name, price, quantity, user_email])
-
-
-
 
 
 def buy_process():
