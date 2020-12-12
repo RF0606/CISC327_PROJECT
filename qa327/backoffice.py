@@ -86,7 +86,7 @@ def buy_process():
                     if buyquantity > quantity:
                         print('Maximum purchase quantity exceeded')
                         continue
-                    if buyquantity <= quantity:
+                    elif buyquantity <= quantity:
                         totalquantity = quantity - buyquantity
                         j[2] = totalquantity
                         owneremail = j[3]
