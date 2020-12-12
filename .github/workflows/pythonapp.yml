@@ -29,6 +29,5 @@ jobs:
         pip install pytest
         cd qa327_frontend_test
         pytest
-        cd..
         cd qa327_backend_test
         pytest
