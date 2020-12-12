@@ -15,7 +15,7 @@ def test_case1(capsys):
     helper(capsys, intput_valid_tickets,input_test_transaction, expected_tail_of_terminal_output, expected_output_tickets)
 
 
-'''test case R4.2 skip when there are  no 'updating' transactions'''
+'''test case R4.2 skip when there are no 'updating' transactions'''
 def test_case2(capsys):
     intput_valid_accounts = ['testticket',90,10,'test@test.com']
     input_test_transaction = []
