@@ -90,22 +90,22 @@ def buy_process():
                         totalquantity = quantity - buyquantity
                         j[2] = totalquantity
                         owneremail = j[3]
-            for j in accReader:
-                if not j:
-                    continue
-                if user_email == j[0]:
-                    balance = eval(j[3])
-                    total_price = price * buyquantity * 1.35 * 1.05
-                    balance = balance - total_price
-                    j[3] = balance
-            for j in accReader:
-                if not j:
-                    continue
-                if owneremail == j[0]:
-                    balance = eval(j[3])
-                    total_earning = price * buyquantity
-                    balance = balance + total_earning
-                    j[3] = balance
+                for k in accReader:
+                    if not k:
+                        continue
+                    if user_email == k[0]:
+                        balance = float(k[3])
+                        total_price = price * buyquantity * 1.35 * 1.05
+                        balance = balance - total_price
+                        k[3] = round(balance,2)
+                for k in accReader:
+                    if not k:
+                        continue
+                    if owneremail == k[0]:
+                        balance = float(k[3])
+                        total_earning = price * buyquantity
+                        balance = balance + total_earning
+                        k[3] = round(balance,2)
 
 
 def update_process():
