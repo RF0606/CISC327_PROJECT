@@ -13,7 +13,7 @@ def test_case1(capsys):
     input_test_transaction = []
     expected_tail_of_terminal_output = []
     expected_output_accounts = ['test@test.com,test_name,Pass123..,1000','buy@test.com,test_name,Pass123..,1000']
-    expected_output_tickets = ['testticket,90,10,test@test.com']
+    expected_output_tickets = ['testticket,90,10,test@test.com','']
     helper(capsys, input_valid_accounts, input_valid_tickets, input_test_transaction, expected_tail_of_terminal_output, expected_output_accounts, expected_output_tickets)
 
 def test_case2(capsys):
@@ -22,7 +22,7 @@ def test_case2(capsys):
     input_test_transaction = ['buying', 'buy@test.com', 'testticket', 90, 11], []
     expected_tail_of_terminal_output = ['Maximum purchase quantity exceeded']
     expected_output_accounts = ['test@test.com,test_name,Pass123..,1000','buy@test.com,test_name,Pass123..,1000']
-    expected_output_tickets = ['testticket,90,10,test@test.com']
+    expected_output_tickets = ['testticket,90,10,test@test.com','']
     helper(capsys, input_valid_accounts, input_valid_tickets, input_test_transaction, expected_tail_of_terminal_output,expected_output_accounts, expected_output_tickets)
 
 def test_case3(capsys):
@@ -31,7 +31,7 @@ def test_case3(capsys):
     input_test_transaction = ['buying', 'buy@test.com', 'testticket', 90, 1],[]
     expected_tail_of_terminal_output = []
     expected_output_accounts = ['test@test.com,test_name,Pass123..,1090.0','buy@test.com,test_name,Pass123..,872.42']
-    expected_output_tickets = ['testticket,90,9,test@test.com']
+    expected_output_tickets = ['testticket,90,9,test@test.com','']
     helper(capsys, input_valid_accounts, input_valid_tickets, input_test_transaction, expected_tail_of_terminal_output,expected_output_accounts, expected_output_tickets)
 
 def helper(
