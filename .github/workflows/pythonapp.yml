@@ -27,5 +27,5 @@ jobs:
     - name: Test with pytest
       run: |
         pip install pytest
-        cd qa327_test
+        cd qa327_backend_test
         pytest
