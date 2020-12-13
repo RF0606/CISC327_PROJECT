@@ -8,11 +8,13 @@ user_email = ''
 user_password = ''
 balance = -1
 
-accFile = open('accounts.csv', 'r')
-ticketFile = open('tickets.csv', 'r')
-tranFile = open('transaction.csv', 'a+')
+accFile = open('accounts.csv', 'r+')
+ticketFile = open('tickets.csv', 'r+')
 accReader = csv.reader(accFile)
 ticketReader = csv.reader(ticketFile)
+
+location_arg = open('frontend_locations.txt', 'r').readline()
+tranFile = open(location_arg+'_transactions.csv', 'w+', newline='')
 tranWriter = csv.writer(tranFile)
 
 
@@ -87,6 +89,8 @@ def R3():
     if not (check_register_email(login_email) and check_register_password(login_password)):
         R1()  # check the format of inputs. return R1 if there is anything invalid
     for i in accReader:  # go over every user info to check login
+        if not i:
+            continue
         if login_email == i[0] and login_password == i[2]:
             global status, user_name, user_email, user_password, balance
             # set global value to be the user info if login succeeded
@@ -133,6 +137,8 @@ def R5():
         R1()    # check the format of inputs. return R1 if there is anything invalid
     count = 0
     for i in ticketReader:  # go over every ticket to check if exists
+        if not i:
+            continue
         if ticket_name == i[0]:
             price = i[1]
             aval_quantity = i[2]
@@ -163,6 +169,8 @@ def R6():
         R1()    # check the format of inputs. return R1 if there is anything invalid
     count = 0
     for i in ticketReader:  # go over every ticket to check if exists
+        if not i:
+            continue
         if ticket_name == i[0] and user_email == i[3]:
             count += 1
     if count == 0:
@@ -317,7 +325,7 @@ def check_exits_email(register_email):
     accReader = csv.reader(open('accounts.csv', 'r'))  # read the file
     # if input email already exits, return False
     for i in accReader:
-        if i == '':
+        if not i:
             continue
         elif register_email == i[0]:
             print("account exits\n")

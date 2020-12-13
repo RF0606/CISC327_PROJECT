@@ -1,10 +1,10 @@
 import csv
 
 
-accFile = open('accounts.csv', 'r')
-ticketFile = open('tickets.csv', 'r')
-new_accFile = open('updated_accounts.csv', 'w+')
-new_ticketFile = open('updated_tickets.csv', 'w+')
+accFile = open('accounts.csv', 'r+')
+ticketFile = open('tickets.csv', 'r+')
+new_accFile = open('updated_accounts.csv', 'w+', newline='')
+new_ticketFile = open('updated_tickets.csv', 'w+', newline='')
 accReader = list(csv.reader(accFile))
 ticketReader = list(csv.reader(ticketFile))
 accWriter = csv.writer(new_accFile)
