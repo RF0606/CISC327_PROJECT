@@ -14,7 +14,8 @@ accReader = csv.reader(accFile)
 ticketReader = csv.reader(ticketFile)
 
 location_arg = open('backend_locations.txt', 'r').readline()
-tranWriter = list(csv.reader(open(location_arg[0]+'_transactions.csv')))
+tranFile = open(location_arg[0]+'_transactions.csv', 'w+', newline='')
+tranWriter = csv.writer(tranFile)
 
 
 def main():
