@@ -8,26 +8,25 @@ path = os.path.dirname(os.path.abspath(__file__))
 
 '''test case R4.1 modify ticket info when there are 'updating' transactions'''
 def test_case1(capsys):
-    intput_valid_tickets = ['testticket',90,10,'test@test.com']
+    input_valid_tickets = ['testticket',90,10,'test@test.com']
     input_test_transaction = ['updating','test@test.com','testticket',80,20]
     expected_tail_of_terminal_output = []
     expected_output_tickets = 'testticket,80,20,test@test.com'
-    helper(capsys, intput_valid_tickets,input_test_transaction, expected_tail_of_terminal_output, expected_output_tickets)
+    helper(capsys, input_valid_tickets, input_test_transaction, expected_tail_of_terminal_output, expected_output_tickets)
 
 
 '''test case R4.2 skip when there are no 'updating' transactions'''
 def test_case2(capsys):
-    intput_valid_accounts = ['testticket',90,10,'test@test.com']
+    input_valid_tickets = ['testticket',90,10,'test@test.com']
     input_test_transaction = []
     expected_tail_of_terminal_output = []
-    expected_output_accounts = 'testticket,90,10,test@test.com'
-    helper(capsys, intput_valid_accounts, input_test_transaction, expected_tail_of_terminal_output,
-           expected_output_accounts)
+    expected_output_tickets = 'testticket,90,10,test@test.com'
+    helper(capsys, input_valid_tickets, input_test_transaction, expected_tail_of_terminal_output, expected_output_tickets)
 
 
 def helper(
         capsys,
-        intput_valid_tickets,
+        input_valid_tickets,
         input_test_transaction,
         expected_tail_of_terminal_output,
         expected_output_tickets
@@ -42,13 +41,13 @@ def helper(
         expected_output_transactions -- list of expected output transactions
     """
 
-    #write a temp account.csv with test accounts existed
+    # write a temp ticket.csv with test accounts existed
     with open('tickets.csv', 'w')as f:
         ff = csv.writer(f)
-        ff.writerow(intput_valid_tickets)
+        ff.writerow(input_valid_tickets)
         f.close()
 
-    #write a transaction.csv file with test transactions
+    # write a transaction.csv file with test transactions
     with open('Vancouver_transactions.csv', 'w')as f:
         ff = csv.writer(f)
         ff.writerow(input_test_transaction)
