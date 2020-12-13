@@ -1,7 +1,5 @@
 # CI-Python
-frontend:
 [![](https://github.com/RF0606/CISC327_PROJECT/workflows/FrontendTest/badge.svg)](https://github.com/RF0606/CISC327_PROJECT/actions)
-backend:
 [![](https://github.com/RF0606/CISC327_PROJECT/workflows/BackendTest/badge.svg)](https://github.com/RF0606/CISC327_PROJECT/actions)
 
 ### Python CI template for GitHub Actions
