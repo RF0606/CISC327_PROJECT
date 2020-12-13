@@ -1,33 +1,28 @@
-import tempfile
 from importlib import reload
 import pytest
 import os
-import io
-import sys
 import csv
-
-from _pytest.capture import capsys
-
 import qa327.backoffice as back
 
 path = os.path.dirname(os.path.abspath(__file__))
 
 
-#2.1 this will test a basic case, with registration in transaction file and no repeated account
+# test case R1.1 this will test a basic case, with registration in transaction file and no repeated account
 def test_first_case(capsys):
-    intput_valid_accounts = []
-    input_test_transaction = [['registration','testname1','test@test1.com','Test_password1',3001],
-                              ['registration','testname2','test@test2.com','Test_password2',3002]]
+    input_valid_accounts = []
+    input_test_transaction = [['registration', 'testname1', 'test@test1.com', 'Test_password1', 3001],
+                              ['registration', 'testname2', 'test@test2.com', 'Test_password2', 3002]]
     expected_tail_of_terminal_output = []
     expected_output_accounts = ['test@test1.com,testname1,Test_password1,3001',
                                 'test@test2.com,testname2,Test_password2,3002']
-    helper(capsys, intput_valid_accounts,input_test_transaction, expected_tail_of_terminal_output, expected_output_accounts)
+    helper(capsys, input_valid_accounts, input_test_transaction, expected_tail_of_terminal_output,
+           expected_output_accounts)
 
 
-#2.2 this will test teh case with registration and other transactions in the transaction file, and no repeated email
-#the output should only generate the registration account into account.csv
+# test case R1.2 this will test teh case with registration and other transactions in the transaction file,
+# and no repeated email the output should only generate the registration account into account.csv
 def test_second_case(capsys):
-    intput_valid_accounts = []
+    input_valid_accounts = []
     input_test_transaction = [['registration', 'testname1', 'test@test1.com', 'Test_password1', 3001],
                               ['registration', 'testname2', 'test@test2.com', 'Test_password2', 3002],
                               ['someTransaction', 'testname3', 'test@test3.com', 'Test_password3', 3003],
@@ -35,28 +30,28 @@ def test_second_case(capsys):
     expected_tail_of_terminal_output = []
     expected_output_accounts = ['test@test1.com,testname1,Test_password1,3001',
                                 'test@test2.com,testname2,Test_password2,3002']
-    helper(capsys, intput_valid_accounts, input_test_transaction, expected_tail_of_terminal_output,
+    helper(capsys, input_valid_accounts, input_test_transaction, expected_tail_of_terminal_output,
            expected_output_accounts)
 
 
-#2.3 this will test the case with registration in transaction file with some repeated email exited in account.csv
-#theere should be no repeated email should be in the updated_accounts.csv
+# test case R2.3 this will test the case with registration in transaction file with some repeated email exited in
+# account.csv there should be no repeated email should be in the updated_accounts.csv
 def test_third_case(capsys):
-    intput_valid_accounts = [['test@test1.com', 'testname1', 'Test_password1', 3001]]
+    input_valid_accounts = [['test@test1.com', 'testname1', 'Test_password1', 3001]]
     input_test_transaction = [['registration', 'testname1', 'test@test1.com', 'Test_password1', 3001],
                               ['registration', 'testname2', 'test@test2.com', 'Test_password2', 3002]]
     expected_tail_of_terminal_output = []
     expected_output_accounts = ['test@test1.com,testname1,Test_password1,3001',
                                 'test@test2.com,testname2,Test_password2,3002']
-    helper(capsys, intput_valid_accounts, input_test_transaction, expected_tail_of_terminal_output,
+    helper(capsys, input_valid_accounts, input_test_transaction, expected_tail_of_terminal_output,
            expected_output_accounts)
 
 
-#2.4 this will test the case with registration in transaction file with some repeated email
+# test case R2.4 this will test the case with registration in transaction file with some repeated email
 # exited in both account.csv and transaction.csv, there should no repeated email in update_accounts
-#the terminal output should call repeated email and no repeated email should be in the updated_accounts.csv
+# the terminal output should call repeated email and no repeated email should be in the updated_accounts.csv
 def test_forth_case(capsys):
-    intput_valid_accounts = [['test@test1.com', 'testname1', 'Test_password1', 3001]]
+    input_valid_accounts = [['test@test1.com', 'testname1', 'Test_password1', 3001]]
     input_test_transaction = [['registration', 'testname1', 'test@test1.com', 'Test_password1', 3001],
                               ['registration', 'testname1', 'test@test1.com', 'Test_password1', 3001],
                               ['registration', 'testname2', 'test@test2.com', 'Test_password2', 3002],
@@ -64,13 +59,13 @@ def test_forth_case(capsys):
     expected_tail_of_terminal_output = []
     expected_output_accounts = ['test@test1.com,testname1,Test_password1,3001',
                                 'test@test2.com,testname2,Test_password2,3002']
-    helper(capsys, intput_valid_accounts, input_test_transaction, expected_tail_of_terminal_output,
+    helper(capsys, input_valid_accounts, input_test_transaction, expected_tail_of_terminal_output,
            expected_output_accounts)
 
 
 def helper(
         capsys,
-        intput_test_accounts,
+        input_test_accounts,
         input_test_transaction,
         expected_tail_of_terminal_output,
         expected_output_accounts
@@ -84,24 +79,21 @@ def helper(
         intput_valid_accounts -- list of valid accounts in the valid_account_list_file
         expected_output_transactions -- list of expected output transactions
     """
-    #write a temp account.csv with test accounts existed
+    # write a temp account.csv with test accounts existed
     with open('accounts.csv', 'w+')as f:
         ff = csv.writer(f)
-        if intput_test_accounts != []:
-            for row in intput_test_accounts:
+        if input_test_accounts != []:
+            for row in input_test_accounts:
                 ff.writerow(row)
 
-    #write a transaction.csv file with test transactions
+    # write a transaction.csv file with test transactions
     with open('Vancouver_transactions.csv', 'w+')as f:
         ff = csv.writer(f)
         for row in input_test_transaction:
             ff.writerow(row)
 
-            
     # cleanup package
     reload(back)
-
-
 
     # run the program
     back.main()

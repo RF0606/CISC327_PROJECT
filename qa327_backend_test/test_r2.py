@@ -1,38 +1,34 @@
-import tempfile
 from importlib import reload
 import pytest
-import os
-import io
-import sys
 import csv
 import qa327.backoffice as backend
 
 
-#test case R2.1 for successfully passing a valid selling transaction
+# test case R2.1 for successfully passing a valid selling transaction
 def test_selling_success(capsys):
-    intput_valid_tickets= []
-    input_test_transaction = [["selling","sell12@test.com","sell12ticket", "90","9"]]
-    expected_tail_of_terminal_output=[]
+    input_valid_tickets = []
+    input_test_transaction = [["selling", "sell12@test.com", "sell12ticket", "90", "9"]]
+    expected_tail_of_terminal_output = []
     expected_output_transaction = "sell12ticket,90,9,sell12@test.com"
 
-    helper(capsys, intput_valid_tickets, input_test_transaction,expected_tail_of_terminal_output,
+    helper(capsys, input_valid_tickets, input_test_transaction, expected_tail_of_terminal_output,
            expected_output_transaction)
 
-#test case R2.2 skip passing sell process when there are no "selling" transaction
+
+# test case R2.2 skip passing sell process when there are no "selling" transaction
 def test_selling_fail(capsys):
-    intput_valid_accounts = ['testticket',90,10,'test@test.com']
+    input_valid_accounts = ['testticket', 90, 10, 'test@test.com']
     input_test_transaction = [["1selling1", "use2@test.com", "sellticket", "90", "2"]]
-    expected_tail_of_terminal_output=[]
+    expected_tail_of_terminal_output = []
     expected_output_transaction = "testticket,90,10,test@test.com"
-    helper(capsys,intput_valid_accounts, input_test_transaction,expected_tail_of_terminal_output,
+    helper(capsys, input_valid_accounts, input_test_transaction, expected_tail_of_terminal_output,
            expected_output_transaction)
-
 
 
 def helper(
-        capsys,intput_valid_tickets,
-        input_test_transaction,expected_tail_of_terminal_output,
-         expected_output_transaction):
+        capsys, input_valid_tickets,
+        input_test_transaction, expected_tail_of_terminal_output,
+        expected_output_transaction):
     """Helper function for testing
 
     Arguments:
@@ -45,7 +41,7 @@ def helper(
     # write a temp account.csv with test accounts existed
     with open('tickets.csv', 'w')as f:
         ff = csv.writer(f)
-        ff.writerow(intput_valid_tickets)
+        ff.writerow(input_valid_tickets)
         f.close()
 
     # write a transaction.csv file with test transactions
@@ -88,5 +84,3 @@ def helper(
                     print('output transactions (expected):', expected_output_transaction)
                     assert i == expected_output_transaction
                     break
-
-
