@@ -1,21 +1,17 @@
-import tempfile
 from importlib import reload
 import pytest
 import os
 import io
 import sys
-
-from _pytest.capture import capsys
-
 import qa327.app as app
 
 path = os.path.dirname(os.path.abspath(__file__))
 
-
 '''test case for R3.5.1, this test aims to test with all requirments satisfied'''
 
+
 def test_successful_case(capsys):
-    terminal_input = ['login','test@test.com,Pass123..','logout','exit']
+    terminal_input = ['login', 'test@test.com,Pass123..', 'logout', 'exit']
     intput_valid_accounts = []
     expected_tail_of_terminal_output = ['Welcome the Queens ticket trade machine',
                                         'type your choice:',
@@ -36,8 +32,9 @@ def test_successful_case(capsys):
 
 '''test case for R3.2.2, input empty email and empty password, should return to landing session'''
 
-def test_empty_both_email_and_password (capsys):
-    terminal_input = ['login',',','logout','exit']
+
+def test_empty_both_email_and_password(capsys):
+    terminal_input = ['login', ',', 'logout', 'exit']
     intput_valid_accounts = []
     expected_tail_of_terminal_output = ['Welcome the Queens ticket trade machine',
                                         'type your choice:',
@@ -55,8 +52,9 @@ def test_empty_both_email_and_password (capsys):
 
 '''test case for R3.2.3, input empty email, should return to landing session'''
 
+
 def test_empty_email(capsys):
-    terminal_input = ['login',',Pass123..','logout','exit']
+    terminal_input = ['login', ',Pass123..', 'logout', 'exit']
     intput_valid_accounts = []
     expected_tail_of_terminal_output = ['Welcome the Queens ticket trade machine',
                                         'type your choice:',
@@ -74,8 +72,9 @@ def test_empty_email(capsys):
 
 '''test case for R3.2.4, input empty password, should return to landing session'''
 
+
 def test_empty_password(capsys):
-    terminal_input = ['login','test@test.com,','logout','exit']
+    terminal_input = ['login', 'test@test.com,', 'logout', 'exit']
     intput_valid_accounts = []
     expected_tail_of_terminal_output = ['Welcome the Queens ticket trade machine',
                                         'type your choice:',
@@ -93,8 +92,9 @@ def test_empty_password(capsys):
 
 '''test case for R3.3.2, input Email does not satisfy the requirements, should return to landing session'''
 
+
 def test_wrong_email_format(capsys):
-    terminal_input = ['login','testemail,Pass123..','logout','exit']
+    terminal_input = ['login', 'testemail,Pass123..', 'logout', 'exit']
     intput_valid_accounts = []
     expected_tail_of_terminal_output = ['Welcome the Queens ticket trade machine',
                                         'type your choice:',
@@ -112,8 +112,9 @@ def test_wrong_email_format(capsys):
 
 '''test case for R3.5.2, input Email does not satisfy the requirements, should return to landing session'''
 
+
 def test_wrong_email_address(capsys):
-    terminal_input = ['login','test@wrong.com,Pass123..','logout','exit']
+    terminal_input = ['login', 'test@wrong.com,Pass123..', 'logout', 'exit']
     intput_valid_accounts = []
     expected_tail_of_terminal_output = ['Welcome the Queens ticket trade machine',
                                         'type your choice:',
@@ -130,8 +131,9 @@ def test_wrong_email_address(capsys):
 
 '''test case for R3.4.1, input Password too long, should return to landing session'''
 
+
 def test_wrong_length_password(capsys):
-    terminal_input = ['login','test@test.com,Passverrrrrrrrrylonnnnnnnnnnng123..','logout','exit']
+    terminal_input = ['login', 'test@test.com,Passverrrrrrrrrylonnnnnnnnnnng123..', 'logout', 'exit']
     intput_valid_accounts = []
     expected_tail_of_terminal_output = ['Welcome the Queens ticket trade machine',
                                         'type your choice:',
@@ -149,8 +151,9 @@ def test_wrong_length_password(capsys):
 
 '''test case for R3.4.2, input Password too short, should return to landing session'''
 
+
 def test_wrong_short_password(capsys):
-    terminal_input = ['login','test@test.com,pa','logout','exit']
+    terminal_input = ['login', 'test@test.com,pa', 'logout', 'exit']
     intput_valid_accounts = []
     expected_tail_of_terminal_output = ['Welcome the Queens ticket trade machine',
                                         'type your choice:',
@@ -168,8 +171,9 @@ def test_wrong_short_password(capsys):
 
 '''test case for R3.4.3, input Password without Uppercase, should return to landing session'''
 
+
 def test_no_Uppercase_password(capsys):
-    terminal_input = ['login','test@test.com,pass123..','logout','exit']
+    terminal_input = ['login', 'test@test.com,pass123..', 'logout', 'exit']
     intput_valid_accounts = []
     expected_tail_of_terminal_output = ['Welcome the Queens ticket trade machine',
                                         'type your choice:',
@@ -187,8 +191,9 @@ def test_no_Uppercase_password(capsys):
 
 '''test case for R3.4.4, input Password without Lowercase, should return to landing session'''
 
+
 def test_no_Lowercase_password(capsys):
-    terminal_input = ['login','test@test.com,PASS123..','logout','exit']
+    terminal_input = ['login', 'test@test.com,PASS123..', 'logout', 'exit']
     intput_valid_accounts = []
     expected_tail_of_terminal_output = ['Welcome the Queens ticket trade machine',
                                         'type your choice:',
@@ -206,8 +211,9 @@ def test_no_Lowercase_password(capsys):
 
 '''test case for R3.4.4, input Password without special characters, should return to landing session'''
 
+
 def test_no_spcialChar_password(capsys):
-    terminal_input = ['login','test@test.com,Pass123','logout','exit']
+    terminal_input = ['login', 'test@test.com,Pass123', 'logout', 'exit']
     intput_valid_accounts = []
     expected_tail_of_terminal_output = ['Welcome the Queens ticket trade machine',
                                         'type your choice:',
@@ -221,7 +227,6 @@ def test_no_spcialChar_password(capsys):
                                         'exit']
 
     helper(capsys, terminal_input, intput_valid_accounts, expected_tail_of_terminal_output)
-
 
 
 def helper(

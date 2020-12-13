@@ -1,4 +1,3 @@
-import tempfile
 from importlib import reload
 import pytest
 import os
@@ -11,8 +10,9 @@ path = os.path.dirname(os.path.abspath(__file__))
 '''user cannot logout without login first'''
 '''test case for R7.1.1	, logout successfully, should return to landing session'''
 
+
 def test_successful_case(capsys):
-    terminal_input = ['login','test@test.com,Pass123..','logout','exit']
+    terminal_input = ['login', 'test@test.com,Pass123..', 'logout', 'exit']
     intput_valid_accounts = []
     expected_tail_of_terminal_output = ['Welcome the Queens ticket trade machine',
                                         'type your choice:',

@@ -13,8 +13,8 @@ ticketFile = open('tickets.csv', 'r+')
 accReader = csv.reader(accFile)
 ticketReader = csv.reader(ticketFile)
 
-location_arg = open('backend_locations.txt', 'r').readline()
-tranFile = open(location_arg[0]+'_transactions.csv', 'w+', newline='')
+location_arg = open('frontend_locations.txt', 'r').readline()
+tranFile = open(location_arg+'_transactions.csv', 'w+', newline='')
 tranWriter = csv.writer(tranFile)
 
 
