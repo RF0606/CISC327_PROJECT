@@ -1,4 +1,3 @@
-import tempfile
 from importlib import reload
 import pytest
 import os
@@ -6,11 +5,12 @@ import io
 import sys
 import qa327.app as app
 
-
 '''test case for R8.1: when user is logged in, exit command are not accepted'''
+
+
 def test_exit_fail(capsys):
     if app.status:
-        terminal_input = ["exit", "logout","exit"]
+        terminal_input = ["exit", "logout", "exit"]
 
         expected_tail_of_terminal_output = ['Welcome the Queens ticket trade machine',
                                             'your balance: 1000',
@@ -25,21 +25,21 @@ def test_exit_fail(capsys):
                                             'register  login  exit',
                                             'exit']
 
+        helper(capsys, terminal_input, expected_tail_of_terminal_output, )
 
-        helper(capsys, terminal_input, expected_tail_of_terminal_output,)
 
 '''test case for R8.2.: enter exit can exit the program when user is not logged in'''
+
+
 def test_exit_successfully(capsys):
     if not app.status:
         terminal_input = ["exit"]
         expected_tail_of_terminal_output = ['Welcome the Queens ticket trade machine',
                                             'type your choice:',
-                                             'register  login  exit',
+                                            'register  login  exit',
                                             'exit']
 
         helper(capsys, terminal_input, expected_tail_of_terminal_output)
-
-
 
 
 def helper(

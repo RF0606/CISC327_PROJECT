@@ -1,4 +1,3 @@
-import tempfile
 from importlib import reload
 import pytest
 import os
@@ -7,10 +6,13 @@ import sys
 import qa327.app as app
 
 path = os.path.dirname(os.path.abspath(__file__))
+
 '''test case for R1.1: Test if user is logged in'''
+
+
 def test_loggedIn(capsys):
     if app.status:
-        terminal_input =['logout', 'exit']
+        terminal_input = ['logout', 'exit']
         expected_tail_of_terminal_output = ['Welcome the Queens ticket trade machine',
                                             'your balance: 1000',
                                             'type your choice:',
@@ -22,7 +24,10 @@ def test_loggedIn(capsys):
 
         helper(capsys, terminal_input, expected_tail_of_terminal_output)
 
+
 '''test case for R1.2: Test if user is not logged in'''
+
+
 def test_notlogged(capsys):
     if not app.status:
         terminal_input = ["exit"]
@@ -33,10 +38,13 @@ def test_notlogged(capsys):
 
         helper(capsys, terminal_input, expected_tail_of_terminal_output)
 
+
 '''test case for R1.3.1: enter buy can go to buy session when user is logged in'''
+
+
 def test_goBuy_logged(capsys):
     if app.status:
-        terminal_input = ["buy",'logout', 'exit' ]
+        terminal_input = ["buy", 'logout', 'exit']
         expected_tail_of_terminal_output = ['Welcome the Queens ticket trade machine',
                                             'your balance: 1000',
                                             'type your choice:',
@@ -52,7 +60,10 @@ def test_goBuy_logged(capsys):
 
         helper(capsys, terminal_input, expected_tail_of_terminal_output)
 
+
 '''test case for R1.3.2: enter sell can go to sell session when user is logged in'''
+
+
 def test_goSell_logged(capsys):
     if app.status:
         terminal_input = ["sell", 'logout', 'exit']
@@ -70,7 +81,10 @@ def test_goSell_logged(capsys):
 
         helper(capsys, terminal_input, expected_tail_of_terminal_output)
 
+
 '''test case for R1.3.3: enter update can go to update session when user is logged in'''
+
+
 def test_goUpdate_logged(capsys):
     if app.status:
         terminal_input = ["update", 'logout', 'exit']
@@ -88,7 +102,10 @@ def test_goUpdate_logged(capsys):
 
         helper(capsys, terminal_input, expected_tail_of_terminal_output)
 
+
 '''test case for R1.3.4: enter logout can go to out session when user is logged in'''
+
+
 def test_logout_successfully(capsys):
     if app.status:
         terminal_input = ["logout", 'exit']
@@ -104,13 +121,16 @@ def test_logout_successfully(capsys):
 
         helper(capsys, terminal_input, expected_tail_of_terminal_output)
 
+
 '''test case for R1.3.5:  enter login can go to login session when user is not logged in'''
+
+
 def test_login_whenNotLoggedIn(capsys):
     if not app.status:
         terminal_input = ["login", "logout", "exit"]
         expected_tail_of_terminal_output = ['Welcome the Queens ticket trade machine',
                                             'type your choice:',
-                                             'register  login  exit',
+                                            'register  login  exit',
                                             'login session started successfully',
                                             'please type your email and password:',
                                             'please retype',
@@ -121,13 +141,16 @@ def test_login_whenNotLoggedIn(capsys):
 
         helper(capsys, terminal_input, expected_tail_of_terminal_output)
 
+
 '''test case for R1.3.6: enter register can go to register session when user is not logged in'''
+
+
 def test_register_successfully(capsys):
     if not app.status:
-        terminal_input = ["register", 'logout','exit', 'exit']
+        terminal_input = ["register", 'logout', 'exit', 'exit']
         expected_tail_of_terminal_output = ['Welcome the Queens ticket trade machine',
                                             'type your choice:',
-                                             'register  login  exit',
+                                            'register  login  exit',
                                             'register session started successfully',
                                             'please enter your email, user name, password and '
                                             'confirm your password:',
@@ -139,24 +162,30 @@ def test_register_successfully(capsys):
 
         helper(capsys, terminal_input, expected_tail_of_terminal_output)
 
+
 '''test case for R1.3.7: enter exit can exit the program when user is not logged in'''
+
+
 def test_exit_successfully(capsys):
     if not app.status:
         terminal_input = ["exit"]
         expected_tail_of_terminal_output = ['Welcome the Queens ticket trade machine',
                                             'type your choice:',
-                                             'register  login  exit',
+                                            'register  login  exit',
                                             'exit']
 
         helper(capsys, terminal_input, expected_tail_of_terminal_output)
 
+
 '''test case for R1.4.1: when user is not logged in, buy command are not accepted'''
+
+
 def test_goBuy_notLogged(capsys):
     if not app.status:
         terminal_input = ["buy", 'exit']
         expected_tail_of_terminal_output = ['Welcome the Queens ticket trade machine',
                                             'type your choice:',
-                                             'register  login  exit',
+                                            'register  login  exit',
                                             'invalid command',
                                             'type your choice:',
                                             'register  login  exit',
@@ -164,13 +193,16 @@ def test_goBuy_notLogged(capsys):
 
         helper(capsys, terminal_input, expected_tail_of_terminal_output)
 
+
 '''test case for R1.4.2: when user is not logged in, sell command are not accepted'''
+
+
 def test_goSell_notLogged(capsys):
     if not app.status:
         terminal_input = ["sell", 'exit']
         expected_tail_of_terminal_output = ['Welcome the Queens ticket trade machine',
                                             'type your choice:',
-                                             'register  login  exit',
+                                            'register  login  exit',
                                             'invalid command',
                                             'type your choice:',
                                             'register  login  exit',
@@ -178,13 +210,16 @@ def test_goSell_notLogged(capsys):
 
         helper(capsys, terminal_input, expected_tail_of_terminal_output)
 
+
 '''test case for R1.4.3: when user is not logged in, update command are not accepted'''
+
+
 def test_goUpdate_notLogged(capsys):
     if not app.status:
         terminal_input = ["update", 'exit']
         expected_tail_of_terminal_output = ['Welcome the Queens ticket trade machine',
                                             'type your choice:',
-                                             'register  login  exit',
+                                            'register  login  exit',
                                             'invalid command',
                                             'type your choice:',
                                             'register  login  exit',
@@ -192,13 +227,16 @@ def test_goUpdate_notLogged(capsys):
 
         helper(capsys, terminal_input, expected_tail_of_terminal_output)
 
+
 '''test case for R1.4.4: when user is not logged in, logout command are not accepted'''
+
+
 def test_logout_fail(capsys):
     if not app.status:
         terminal_input = ["logout", 'exit']
         expected_tail_of_terminal_output = ['Welcome the Queens ticket trade machine',
                                             'type your choice:',
-                                             'register  login  exit',
+                                            'register  login  exit',
                                             'invalid command',
                                             'type your choice:',
                                             'register  login  exit',
@@ -206,10 +244,13 @@ def test_logout_fail(capsys):
 
         helper(capsys, terminal_input, expected_tail_of_terminal_output)
 
+
 '''test case for R1.5.1: when user is logged in, login command are not accepted'''
+
+
 def test_login_fail(capsys):
     if app.status:
-        terminal_input = ["login", "logout","exit"]
+        terminal_input = ["login", "logout", "exit"]
         expected_tail_of_terminal_output = ['Welcome the Queens ticket trade machine',
                                             'your balance: 1000',
                                             'type your choice:',
@@ -224,11 +265,14 @@ def test_login_fail(capsys):
                                             'exit']
 
         helper(capsys, terminal_input, expected_tail_of_terminal_output)
+
 
 '''test case for R1.5.2: when user is logged in, register command are not accepted'''
+
+
 def test_register_fail(capsys):
     if app.status:
-        terminal_input = ["register", "logout","exit"]
+        terminal_input = ["register", "logout", "exit"]
         expected_tail_of_terminal_output = ['Welcome the Queens ticket trade machine',
                                             'your balance: 1000',
                                             'type your choice:',
@@ -241,14 +285,16 @@ def test_register_fail(capsys):
                                             'type your choice:',
                                             'register  login  exit',
                                             'exit']
-
 
         helper(capsys, terminal_input, expected_tail_of_terminal_output)
 
+
 '''test case for R1.5.3: when user is logged in, exit command are not accepted'''
+
+
 def test_exit_fail(capsys):
     if app.status:
-        terminal_input = ["exit", "logout","exit"]
+        terminal_input = ["exit", "logout", "exit"]
 
         expected_tail_of_terminal_output = ['Welcome the Queens ticket trade machine',
                                             'your balance: 1000',
@@ -263,8 +309,8 @@ def test_exit_fail(capsys):
                                             'register  login  exit',
                                             'exit']
 
+        helper(capsys, terminal_input, expected_tail_of_terminal_output, )
 
-        helper(capsys, terminal_input, expected_tail_of_terminal_output,)
 
 def helper(
         capsys,

@@ -7,10 +7,11 @@ import qa327.app as app
 
 path = os.path.dirname(os.path.abspath(__file__))
 
-
 '''test case R5.x.1'''
+
+
 def test_successful_case(capsys):
-    terminal_input = ['login','test@test.com,Pass123..','buy','testticket,3','logout','exit']
+    terminal_input = ['login', 'test@test.com,Pass123..', 'buy', 'testticket,3', 'logout', 'exit']
     expected_tail_of_terminal_output = ['Welcome the Queens ticket trade machine',
                                         'type your choice:',
                                         'register  login  exit',
@@ -36,8 +37,9 @@ def test_successful_case(capsys):
 
 '''test case R5.1.2 check login has been done in landing session, no need and can not test here'''
 
-
 '''test case R5.2.2 ticket name has to be alphanumeric-only'''
+
+
 def test_ticket_name_alphanumeric_only(capsys):
     terminal_input = ['login', 'test@test.com,Pass123..', 'buy', 'asd!@#123,3', 'logout', 'exit']
     expected_tail_of_terminal_output = ['Welcome the Queens ticket trade machine',
@@ -66,6 +68,8 @@ def test_ticket_name_alphanumeric_only(capsys):
 
 
 '''test case R5.2.3 space allowed only if it is not the first or the last character'''
+
+
 def test_ticket_name_space_not_first_last(capsys):
     terminal_input = ['login', 'test@test.com,Pass123..', 'buy', 'testticket ,3', 'logout', 'exit']
     expected_tail_of_terminal_output = ['Welcome the Queens ticket trade machine',
@@ -94,8 +98,12 @@ def test_ticket_name_space_not_first_last(capsys):
 
 
 '''test case R5.3.2 ticket name is no longer than 60 characters'''
+
+
 def test_ticket_name_no_longer_than_60(capsys):
-    terminal_input = ['login', 'test@test.com,Pass123..', 'buy', 'testticketasdfasdfasasdjkfhaknschfiawehncfikasnkascfasdfvarfehnsfgbtghsgvdfgbstfdfgbyfdgbdfgvftfdfbgfdvgbgfvgbfgbfdgbfhngbnhgbgghb,3', 'logout', 'exit']
+    terminal_input = ['login', 'test@test.com,Pass123..', 'buy',
+                      'testticketasdfasdfasasdjkfhaknschfiawehncfikasnkascfasdfvarfehnsfgbtghsgvdfgbstfdfgbyfdgbdfgvftfdfbgfdvgbgfvgbfgbfdgbfhngbnhgbgghb,3',
+                      'logout', 'exit']
     expected_tail_of_terminal_output = ['Welcome the Queens ticket trade machine',
                                         'type your choice:',
                                         'register  login  exit',
@@ -122,6 +130,8 @@ def test_ticket_name_no_longer_than_60(capsys):
 
 
 '''test case R5.4.2 ticket quantity should be more than 0, and less than or equal to the available quantity. <0 case'''
+
+
 def test_ticket_quantity_more_than_0(capsys):
     terminal_input = ['login', 'test@test.com,Pass123..', 'buy', 'testticket,-10', 'logout', 'exit']
     expected_tail_of_terminal_output = ['Welcome the Queens ticket trade machine',
@@ -150,6 +160,8 @@ def test_ticket_quantity_more_than_0(capsys):
 
 
 '''test case R5.4.3 ticket quantity should be more than 0, and less than or equal to the available quantity. >available quantity case'''
+
+
 def test_ticket_quantity_less_than_available_quantity(capsys):
     terminal_input = ['login', 'test@test.com,Pass123..', 'buy', 'testticket,15', 'logout', 'exit']
     expected_tail_of_terminal_output = ['Welcome the Queens ticket trade machine',
@@ -178,6 +190,8 @@ def test_ticket_quantity_less_than_available_quantity(capsys):
 
 
 '''test case R5.5.2 The user has more balance than the ticket price * quantity + service fee (35%) + tax (5%)**'''
+
+
 def test_ticket_price_10_100(capsys):
     terminal_input = ['login', 'test@test.com,Pass123..', 'buy', 'testticket,10', 'logout', 'exit']
     expected_tail_of_terminal_output = ['Welcome the Queens ticket trade machine',
@@ -245,7 +259,7 @@ def helper(
 
     # compare transactions:
     if expected_output_transactions != '':
-        with open('transaction.csv', 'r') as of:
+        with open('Kingston_transactions.csv', 'r') as of:
             content = of.read().splitlines()
             # print out the testing information for debugging
             # the following print content will only display if a

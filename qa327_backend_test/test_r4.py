@@ -6,7 +6,8 @@ import qa327.backoffice as back
 
 path = os.path.dirname(os.path.abspath(__file__))
 
-'''test case R4.1 modify ticket info when there are 'updating' transactions'''
+
+# test case R4.1 modify ticket info when there are 'updating' transactions
 def test_case1(capsys):
     input_valid_tickets = ['testticket',90,10,'test@test.com']
     input_test_transaction = ['updating','test@test.com','testticket',80,20]
@@ -15,7 +16,7 @@ def test_case1(capsys):
     helper(capsys, input_valid_tickets, input_test_transaction, expected_tail_of_terminal_output, expected_output_tickets)
 
 
-'''test case R4.2 skip when there are no 'updating' transactions'''
+# test case R4.2 skip when there are no 'updating' transactions
 def test_case2(capsys):
     input_valid_tickets = ['testticket',90,10,'test@test.com']
     input_test_transaction = []
