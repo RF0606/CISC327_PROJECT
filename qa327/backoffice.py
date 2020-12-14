@@ -82,7 +82,7 @@ def buy_process():
                 if not j:
                     continue
                 if ticket_name == j[0]:
-                    quantity = eval(j[2])
+                    quantity = int(j[2])
                     if buyquantity > quantity:
                         print('Maximum purchase quantity exceeded')
                         continue
