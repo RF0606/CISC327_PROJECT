@@ -14,7 +14,7 @@ accReader = csv.reader(accFile)
 ticketReader = csv.reader(ticketFile)
 
 location_arg = open('frontend_locations.txt', 'r').readline()
-tranFile = open(location_arg+'_transactions.csv', 'w+', newline='')
+tranFile = open(location_arg+'_transactions.csv', 'a+', newline='')
 tranWriter = csv.writer(tranFile)
 
 
@@ -101,10 +101,9 @@ def R3():
             status = True
             print('account logged in')
             R1()
-        else:
-            # return R1 if failed
-            print('login failed')
-            R1()
+    # return R1 if failed
+    print('login failed')
+    R1()
 
 
 def R4():
@@ -295,7 +294,7 @@ def check_quantity_buy(price, quantity, aval_quantity):
         print('transaction was created unsuccessfully\nplease retype\nthe quantity of the tickets has to be '
               'more than 0, and less than or equal to the available quantity')
         return False
-    elif not (int(balance) >= price * quantity * 1.35 * 1.05):
+    elif not (float(balance) >= price * quantity * 1.35 * 1.05):
         print('transaction was created unsuccessfully\nplease retype\nyour balance is insufficient')
         return False
     return True
